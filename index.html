@@ -2,417 +2,650 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Polivalente - Escola que Transforma</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Polivalente — Escola que Transforma</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --blue:#1a3a8f;
-  --blue2:#2d5be3;
-  --cyan:#4dd8f0;
-  --yellow:#ffd166;
-  --purple:#7b3fc4;
-  --green:#2ecc71;
+  --blue-deep:#0a1f6e;
+  --blue:#1a3aef;
+  --blue-mid:#2d5be3;
+  --cyan:#00d4ff;
+  --cyan2:#4aeaff;
+  --yellow:#ffcc00;
+  --orange:#ff7a00;
+  --green:#00e676;
+  --pink:#ff4d8d;
+  --purple:#7c3aed;
   --white:#fff;
-  --gray:#f8f9ff;
-  --text:#1a1a2e;
-  --muted:#888;
+  --surface:#f0f4ff;
+  --text:#0d1b4b;
+  --muted:#6b7aaa;
+  --r:16px;
+  --rr:24px;
 }
 html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
-body{font-family:'Inter',sans-serif;color:var(--text);background:#fff;overflow-x:hidden;max-width:430px;margin:0 auto;position:relative}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  color:var(--text);background:#fff;
+  overflow-x:hidden;
+  max-width:430px;margin:0 auto;
+  position:relative;
+  padding-bottom:72px;
+}
 
-/* SPLASH */
+/* ── SPLASH ── */
 #splash{
-  position:fixed;inset:0;background:var(--blue);
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(160deg,#0a1f6e 0%,#1a3aef 55%,#00d4ff 100%);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  z-index:9999;transition:opacity .6s ease, transform .6s ease;
+  transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1);
 }
-#splash.hide{opacity:0;transform:scale(1.08);pointer-events:none}
-.splash-logo{
-  width:90px;height:90px;background:var(--blue2);border-radius:50%;
+#splash.out{opacity:0;transform:scale(1.1);pointer-events:none}
+.splash-ring{
+  width:100px;height:100px;position:relative;
   display:flex;align-items:center;justify-content:center;
-  font-size:38px;font-weight:900;color:#fff;
-  border:4px solid rgba(255,255,255,0.3);
-  animation:splashPulse 1s ease infinite alternate;
 }
-@keyframes splashPulse{to{transform:scale(1.08);box-shadow:0 0 40px rgba(77,216,240,0.5)}}
-.splash-brand{margin-top:18px;color:#fff;font-size:22px;font-weight:900;letter-spacing:2px}
-.splash-sub{color:rgba(255,255,255,0.6);font-size:11px;letter-spacing:3px;margin-top:4px;text-transform:uppercase}
-.splash-bar{width:160px;height:3px;background:rgba(255,255,255,0.15);border-radius:4px;margin-top:32px;overflow:hidden}
-.splash-bar-fill{height:100%;background:var(--cyan);border-radius:4px;width:0;animation:loadBar 1.8s ease forwards}
-@keyframes loadBar{to{width:100%}}
+.splash-ring::before{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  border:3px solid rgba(255,255,255,0.2);
+  animation:spinRing 2s linear infinite;
+}
+.splash-ring::after{
+  content:'';position:absolute;inset:-8px;border-radius:50%;
+  border:2px solid transparent;
+  border-top-color:var(--cyan);border-right-color:var(--yellow);
+  animation:spinRing 1.4s linear infinite reverse;
+}
+@keyframes spinRing{to{transform:rotate(360deg)}}
+.splash-p{
+  width:80px;height:80px;background:rgba(255,255,255,0.12);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:32px;font-weight:900;color:#fff;border:2px solid rgba(255,255,255,0.25);
+  backdrop-filter:blur(8px);
+  animation:splashGlow 1.2s ease-in-out infinite alternate;
+}
+@keyframes splashGlow{
+  to{box-shadow:0 0 40px rgba(0,212,255,0.6),0 0 80px rgba(0,212,255,0.2)}
+}
+.splash-name{
+  margin-top:20px;font-size:24px;font-weight:900;color:#fff;
+  letter-spacing:3px;text-transform:uppercase;
+  animation:fadeUp .6s ease .3s both;
+}
+.splash-tag{
+  font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:4px;
+  text-transform:uppercase;margin-top:6px;
+  animation:fadeUp .6s ease .5s both;
+}
+.splash-progress{
+  width:180px;height:3px;background:rgba(255,255,255,0.15);
+  border-radius:10px;margin-top:36px;overflow:hidden;
+  animation:fadeUp .4s ease .6s both;
+}
+.splash-fill{
+  height:100%;background:linear-gradient(90deg,var(--cyan),var(--yellow));
+  border-radius:10px;width:0;
+  animation:fillBar 1.8s cubic-bezier(.4,0,.2,1) .2s forwards;
+}
+@keyframes fillBar{to{width:100%}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-/* NAV */
+/* ── NAV ── */
 nav{
-  background:#fff;display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,0.95);backdrop-filter:blur(16px);
+  display:flex;align-items:center;justify-content:space-between;
   padding:0 18px;height:62px;
-  box-shadow:0 2px 16px rgba(0,0,0,0.07);
+  box-shadow:0 1px 0 rgba(0,0,0,0.06),0 4px 24px rgba(26,58,239,0.06);
   position:sticky;top:0;z-index:200;
 }
-.logo{display:flex;align-items:center;gap:8px;text-decoration:none}
-.logo-icon{
-  width:38px;height:38px;background:var(--blue);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  color:#fff;font-weight:900;font-size:16px;
-  border:2.5px solid var(--blue2);
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.logo-mark{
+  width:40px;height:40px;
+  background:linear-gradient(135deg,var(--blue) 0%,var(--cyan) 100%);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:17px;font-weight:900;color:#fff;
+  box-shadow:0 4px 14px rgba(26,58,239,0.35);
+  position:relative;overflow:hidden;
 }
-.logo-text strong{display:block;font-size:13px;font-weight:900;color:var(--blue);letter-spacing:1px}
-.logo-text span{font-size:8px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
-.nav-right{display:flex;align-items:center;gap:10px}
-.btn-pedido{
-  background:var(--blue2);color:#fff;border:none;
-  padding:8px 14px;border-radius:8px;font-size:12px;font-weight:700;
-  cursor:pointer;display:flex;align-items:center;gap:6px;
-  transition:transform .15s,box-shadow .15s;
+.logo-mark::after{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:linear-gradient(45deg,transparent 40%,rgba(255,255,255,0.2) 50%,transparent 60%);
+  animation:shineNav 3s ease infinite;
 }
-.btn-pedido:active{transform:scale(0.95)}
-.btn-pedido .badge{
-  background:#fff;color:var(--blue2);border-radius:50%;
-  width:18px;height:18px;font-size:10px;display:flex;
-  align-items:center;justify-content:center;font-weight:700;
-}
-.hamburger{background:none;border:none;cursor:pointer;padding:4px;display:flex;flex-direction:column;gap:5px}
-.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
-
-/* HERO */
-.hero{
-  background:linear-gradient(160deg,#0f2567 0%,var(--blue) 45%,#1a8fd4 100%);
-  padding:28px 20px 36px;position:relative;overflow:hidden;min-height:520px;
-}
-.hero-particles{position:absolute;inset:0;pointer-events:none}
-.particle{
-  position:absolute;border-radius:50%;
-  animation:floatParticle linear infinite;
-  opacity:0;
-}
-@keyframes floatParticle{
-  0%{opacity:0;transform:translateY(0) scale(0)}
-  10%{opacity:1}
-  90%{opacity:1}
-  100%{opacity:0;transform:translateY(-300px) scale(1.5)}
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:5px;
-  background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);
-  border-radius:20px;padding:5px 12px;font-size:11px;color:#fff;
-  margin-bottom:18px;font-weight:500;
-  animation:fadeSlideDown .6s ease .3s both;
-}
-@keyframes fadeSlideDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
-.hero h1{
-  font-size:32px;font-weight:900;color:#fff;line-height:1.1;margin-bottom:14px;
-  animation:fadeSlideUp .6s ease .4s both;
-}
-.hero h1 span{color:var(--cyan)}
-@keyframes fadeSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-.hero p{
-  font-size:13px;color:rgba(255,255,255,0.82);line-height:1.7;margin-bottom:22px;
-  animation:fadeSlideUp .6s ease .5s both;
-}
-.hero-plate-wrap{
-  position:relative;margin:0 auto 22px;width:240px;height:240px;
-  animation:fadeSlideUp .7s ease .6s both;
-}
-.hero-plate-wrap img{
-  width:220px;height:220px;border-radius:50%;object-fit:cover;
-  border:5px solid rgba(255,255,255,0.25);
-  position:absolute;top:10px;left:10px;
-  box-shadow:0 8px 40px rgba(0,0,0,0.3);
-  animation:rotatePlate 20s linear infinite;
-}
-@keyframes rotatePlate{
-  0%{border-color:rgba(255,255,255,0.25)}
-  50%{border-color:rgba(77,216,240,0.5)}
-  100%{border-color:rgba(255,255,255,0.25)}
-}
-.nutri-badge{
-  position:absolute;bottom:-8px;right:-10px;
-  background:#fff;border-radius:50%;width:88px;height:88px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;font-size:7px;color:var(--blue);font-weight:700;padding:8px;
-  line-height:1.3;border:3px solid var(--blue2);text-transform:uppercase;letter-spacing:.4px;
-  animation:badgeBounce 2s ease infinite;
-}
-@keyframes badgeBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-.nutri-badge .ni{font-size:18px;margin-bottom:2px}
-.floating-emojis{position:absolute;inset:0;pointer-events:none}
-.fem{position:absolute;font-size:22px;animation:floatEmoji ease-in-out infinite}
-@keyframes floatEmoji{
-  0%,100%{transform:translateY(0) rotate(0deg)}
-  50%{transform:translateY(-12px) rotate(10deg)}
-}
-.hero-buttons{
-  display:flex;flex-direction:column;gap:10px;
-  animation:fadeSlideUp .6s ease .7s both;
-}
-.btn-hero-primary{
-  background:#fff;color:var(--blue);border:none;
-  padding:14px 20px;border-radius:12px;font-size:14px;font-weight:700;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
-  transition:transform .15s,box-shadow .15s;
-  box-shadow:0 4px 20px rgba(0,0,0,0.2);
-}
-.btn-hero-primary:active{transform:scale(0.97)}
-.btn-hero-secondary{
-  background:rgba(255,255,255,0.12);color:#fff;
-  border:1.5px solid rgba(255,255,255,0.35);
-  padding:13px 20px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;
-  transition:transform .15s,background .2s;
-}
-.btn-hero-secondary:active{background:rgba(255,255,255,0.2);transform:scale(0.97)}
-.hero-approve{
-  display:flex;align-items:center;gap:10px;margin-top:18px;
-  animation:fadeSlideUp .6s ease .8s both;
-}
-.avatars{display:flex}
-.avatars img{
-  width:28px;height:28px;border-radius:50%;border:2px solid #fff;
-  margin-left:-7px;object-fit:cover;
-}
-.avatars img:first-child{margin-left:0}
-.approve-text{font-size:11px;color:rgba(255,255,255,0.85);line-height:1.4}
-.approve-text strong{color:#fff;display:flex;align-items:center;gap:4px;font-size:12px}
-.check-badge{
-  width:15px;height:15px;background:var(--green);border-radius:50%;
-  display:inline-flex;align-items:center;justify-content:center;font-size:9px;
-}
-
-/* FEATURES SCROLL */
-.features-scroll{
-  background:#fff;padding:20px 0;
-  box-shadow:0 4px 16px rgba(0,0,0,0.07);
-  overflow:hidden;
-}
-.features-track{
-  display:flex;gap:0;
-  animation:scrollTrack 18s linear infinite;
-  width:max-content;
-}
-@keyframes scrollTrack{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.feature-pill{
-  display:flex;align-items:center;gap:8px;
-  background:var(--gray);border-radius:50px;
-  padding:10px 18px;margin:0 8px;white-space:nowrap;
-  flex-shrink:0;
-}
-.feature-pill .fi{font-size:18px}
-.feature-pill span{font-size:12px;font-weight:600;color:var(--blue)}
-
-/* ESPECIAIS */
-.especiais{background:var(--blue);padding:28px 20px 32px}
-.section-label{
+@keyframes shineNav{0%,100%{transform:translateX(-100%) rotate(45deg)}50%{transform:translateX(100%) rotate(45deg)}}
+.logo-words strong{display:block;font-size:13px;font-weight:900;color:var(--text);letter-spacing:.5px}
+.logo-words small{font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.cart-btn{
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:#fff;border:none;padding:8px 14px;border-radius:10px;
+  font-size:12px;font-weight:700;cursor:pointer;
   display:flex;align-items:center;gap:6px;
-  font-size:11px;color:var(--yellow);font-weight:700;
-  text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;
+  box-shadow:0 4px 14px rgba(26,58,239,0.3);
+  transition:transform .15s,box-shadow .15s;
+  position:relative;overflow:hidden;
 }
-.especiais h2{font-size:22px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:8px}
-.especiais p{font-size:12px;color:rgba(255,255,255,0.72);line-height:1.6;margin-bottom:18px}
-.btn-white{
-  background:#fff;color:var(--blue);border:none;
-  padding:11px 20px;border-radius:10px;font-size:13px;font-weight:700;
-  cursor:pointer;display:inline-flex;align-items:center;gap:6px;
-  transition:transform .15s;margin-bottom:22px;
+.cart-btn:active{transform:scale(0.94)}
+.cart-num{
+  background:#fff;color:var(--blue);border-radius:50%;
+  width:18px;height:18px;font-size:10px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
 }
-.btn-white:active{transform:scale(0.97)}
-.days-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.menu-btn{
+  background:var(--surface);border:none;width:38px;height:38px;
+  border-radius:10px;cursor:pointer;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:5px;
+}
+.menu-btn span{display:block;width:18px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(160deg,#050e3a 0%,#0d1faa 35%,#1a3aef 60%,#0099dd 85%,#00c8ff 100%);
+  padding:30px 20px 40px;position:relative;overflow:hidden;min-height:580px;
+}
+/* Glowing orbs */
+.orb{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none}
+.orb1{width:260px;height:260px;background:rgba(0,212,255,0.25);top:-60px;right:-80px}
+.orb2{width:200px;height:200px;background:rgba(255,204,0,0.15);bottom:40px;left:-60px}
+.orb3{width:150px;height:150px;background:rgba(255,77,141,0.2);top:50%;right:-40px}
+
+/* Mesh grid overlay */
+.hero-mesh{
+  position:absolute;inset:0;pointer-events:none;opacity:0.06;
+  background-image:
+    linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(135deg,rgba(0,212,255,0.2),rgba(255,255,255,0.1));
+  border:1px solid rgba(0,212,255,0.35);border-radius:50px;
+  padding:6px 14px;font-size:11px;color:#fff;margin-bottom:22px;font-weight:600;
+  backdrop-filter:blur(8px);
+  animation:fadeUp .6s ease .4s both;
+}
+.badge-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 8px var(--cyan);
+  animation:pulseDot 1.5s ease infinite;
+}
+@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.6}}
+
+/* PLATE */
+.hero-plate-area{
+  position:relative;width:260px;height:260px;margin:0 auto 24px;
+  animation:fadeUp .7s ease .5s both;
+}
+.plate-glow{
+  position:absolute;inset:-20px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,212,255,0.3) 0%,transparent 70%);
+  animation:glowPulse 3s ease-in-out infinite;
+}
+@keyframes glowPulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.15);opacity:1}}
+.plate-ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:2px solid transparent;
+  background:
+    linear-gradient(#0d1faa,#0d1faa) padding-box,
+    linear-gradient(135deg,var(--cyan),var(--yellow),var(--pink)) border-box;
+  animation:rotateBorder 8s linear infinite;
+}
+@keyframes rotateBorder{to{transform:rotate(360deg)}}
+.plate-img{
+  position:absolute;inset:10px;border-radius:50%;object-fit:cover;
+  border:4px solid rgba(255,255,255,0.15);
+  box-shadow:0 12px 50px rgba(0,0,0,0.4),inset 0 0 20px rgba(0,212,255,0.1);
+}
+.nutri-seal{
+  position:absolute;bottom:-4px;right:-12px;
+  width:90px;height:90px;
+  background:linear-gradient(135deg,#fff 0%,#e8f0ff 100%);
+  border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:8px;
+  border:3px solid var(--blue);
+  box-shadow:0 8px 28px rgba(26,58,239,0.35);
+  animation:sealFloat 2.5s ease-in-out infinite;
+}
+@keyframes sealFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+.nutri-seal .seal-icon{font-size:20px;margin-bottom:2px}
+.nutri-seal p{font-size:6.5px;color:var(--blue);font-weight:800;line-height:1.3;text-transform:uppercase;letter-spacing:.4px}
+
+/* FLOATING FOOD ICONS */
+.food-float{
+  position:absolute;pointer-events:none;
+  font-size:28px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  animation:foodFloat ease-in-out infinite;
+}
+@keyframes foodFloat{
+  0%,100%{transform:translateY(0) rotate(0deg) scale(1)}
+  33%{transform:translateY(-14px) rotate(8deg) scale(1.05)}
+  66%{transform:translateY(-6px) rotate(-5deg) scale(0.97)}
+}
+
+.hero h1{
+  font-size:34px;font-weight:900;color:#fff;line-height:1.1;
+  margin-bottom:14px;letter-spacing:-.5px;
+  animation:fadeUp .6s ease .6s both;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(90deg,var(--cyan),var(--yellow));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero p{
+  font-size:13.5px;color:rgba(255,255,255,0.78);line-height:1.75;
+  margin-bottom:26px;animation:fadeUp .6s ease .7s both;
+}
+
+.hero-btns{display:flex;flex-direction:column;gap:11px;animation:fadeUp .6s ease .8s both}
+.btn-main{
+  background:linear-gradient(135deg,#fff 0%,#e8f0ff 100%);
+  color:var(--blue);border:none;
+  padding:15px 22px;border-radius:14px;font-size:14px;font-weight:800;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;
+  box-shadow:0 8px 28px rgba(0,0,0,0.25),0 0 0 1px rgba(255,255,255,0.1);
+  transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden;
+}
+.btn-main::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(26,58,239,0.06),transparent);
+  transition:opacity .2s;
+}
+.btn-main:active{transform:scale(0.97)}
+.btn-outline{
+  background:rgba(255,255,255,0.08);color:#fff;
+  border:1.5px solid rgba(255,255,255,0.3);
+  padding:14px 22px;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;
+  backdrop-filter:blur(8px);transition:transform .15s,background .2s;
+}
+.btn-outline:active{background:rgba(255,255,255,0.15);transform:scale(0.97)}
+
+.hero-social{
+  display:flex;align-items:center;gap:10px;margin-top:22px;
+  animation:fadeUp .6s ease .9s both;
+}
+.avatars-stack{display:flex}
+.avatars-stack img{
+  width:30px;height:30px;border-radius:50%;
+  border:2.5px solid rgba(255,255,255,0.6);
+  margin-left:-8px;object-fit:cover;
+  box-shadow:0 2px 8px rgba(0,0,0,0.3);
+}
+.avatars-stack img:first-child{margin-left:0}
+.social-text{font-size:11.5px;color:rgba(255,255,255,0.85);line-height:1.4}
+.social-text strong{color:#fff;display:flex;align-items:center;gap:5px;font-size:12px}
+.verified{
+  width:16px;height:16px;background:var(--green);border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:9px;box-shadow:0 2px 8px rgba(0,230,118,0.5);
+}
+
+/* ── TICKER ── */
+.ticker-wrap{
+  background:linear-gradient(90deg,var(--blue-deep),var(--blue),var(--blue-deep));
+  padding:0;overflow:hidden;height:40px;display:flex;align-items:center;
+  border-top:1px solid rgba(255,255,255,0.07);
+  border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.ticker-track{
+  display:flex;gap:0;
+  animation:ticker 22s linear infinite;
+  white-space:nowrap;
+}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tick-item{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:0 22px;font-size:11.5px;color:rgba(255,255,255,0.85);font-weight:600;
+  letter-spacing:.3px;
+}
+.tick-dot{width:4px;height:4px;border-radius:50%;background:var(--cyan);flex-shrink:0}
+
+/* ── ESPECIAIS ── */
+.especiais{
+  background:linear-gradient(170deg,#080f3a 0%,#0d1faa 40%,#1744e0 70%,#0a3fa8 100%);
+  padding:30px 20px 34px;position:relative;overflow:hidden;
+}
+.especiais::before{
+  content:'';position:absolute;top:-100px;right:-80px;
+  width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,204,0,0.12),transparent 70%);
+}
+.especiais::after{
+  content:'';position:absolute;bottom:-60px;left:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,212,255,0.1),transparent 70%);
+}
+.chip{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10.5px;font-weight:700;color:var(--yellow);
+  text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;
+}
+.chip-icon{font-size:14px;animation:spinStar 3s ease infinite}
+@keyframes spinStar{0%,100%{transform:rotate(0)}50%{transform:rotate(20deg) scale(1.2)}}
+.especiais h2{font-size:23px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:8px}
+.especiais p{font-size:12.5px;color:rgba(255,255,255,0.68);line-height:1.7;margin-bottom:20px}
+.btn-glass{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,0.1);color:#fff;border:1.5px solid rgba(255,255,255,0.2);
+  padding:10px 20px;border-radius:50px;font-size:12.5px;font-weight:700;cursor:pointer;
+  backdrop-filter:blur(12px);transition:all .2s;margin-bottom:24px;
+}
+.btn-glass:active{background:rgba(255,255,255,0.18);transform:scale(0.97)}
+.days-scroll{
+  display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
 .days-scroll::-webkit-scrollbar{display:none}
 .day-card{
-  background:rgba(255,255,255,0.1);border-radius:14px;
-  padding:14px 12px;text-align:center;
-  border:1.5px solid rgba(255,255,255,0.12);
-  cursor:pointer;transition:all .25s;flex-shrink:0;width:140px;
+  flex-shrink:0;width:136px;
+  background:rgba(255,255,255,0.08);
+  border:1.5px solid rgba(255,255,255,0.1);
+  border-radius:18px;padding:14px 10px 12px;text-align:center;cursor:pointer;
+  backdrop-filter:blur(8px);
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
 }
-.day-card.active{background:#fff;border-color:#fff}
-.day-card:active{transform:scale(0.97)}
-.day-name{font-size:10px;font-weight:700;color:rgba(255,255,255,0.9);text-transform:uppercase;letter-spacing:.5px}
+.day-card::before{
+  content:'';position:absolute;inset:0;border-radius:18px;
+  background:linear-gradient(135deg,rgba(0,212,255,0.15),rgba(255,204,0,0.08));
+  opacity:0;transition:opacity .25s;
+}
+.day-card.active{
+  background:#fff;border-color:#fff;
+  box-shadow:0 8px 32px rgba(0,0,0,0.25),0 0 0 1px rgba(255,255,255,0.5);
+  transform:translateY(-4px);
+}
+.day-card.active::before{opacity:1}
+.day-card:active{transform:scale(0.96)}
+.day-name{font-size:10px;font-weight:800;color:rgba(255,255,255,0.9);text-transform:uppercase;letter-spacing:.8px}
+.day-date{font-size:10px;color:rgba(255,255,255,0.5);margin-bottom:8px}
 .day-card.active .day-name{color:var(--blue)}
-.day-date{font-size:10px;color:rgba(255,255,255,0.55);margin-bottom:8px}
-.day-card.active .day-date{color:var(--blue2)}
-.special-badge{
-  display:inline-block;background:var(--yellow);color:#7a5200;
-  font-size:8px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:6px;text-transform:uppercase;
+.day-card.active .day-date{color:var(--blue-mid)}
+.day-card.active .day-meal{color:#334}
+.special-tag{
+  display:inline-block;
+  background:linear-gradient(90deg,var(--yellow),var(--orange));
+  color:#fff;font-size:8px;font-weight:800;padding:2px 9px;
+  border-radius:50px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;
+  box-shadow:0 2px 8px rgba(255,122,0,.4);
 }
-.day-card img{width:100%;height:75px;border-radius:8px;object-fit:cover;margin-bottom:6px}
-.day-meal{font-size:10px;color:rgba(255,255,255,0.82);line-height:1.4}
-.day-card.active .day-meal{color:#333}
-.dots{display:flex;justify-content:center;gap:6px;margin-top:14px}
-.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.25);transition:all .3s}
-.dot.active{width:18px;background:#fff;border-radius:4px}
+.day-card img{
+  width:100%;height:76px;border-radius:10px;object-fit:cover;
+  margin-bottom:7px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+  transition:transform .2s;
+}
+.day-card:hover img{transform:scale(1.04)}
+.day-meal{font-size:10px;color:rgba(255,255,255,0.78);line-height:1.4}
+.indicator-dots{display:flex;justify-content:center;gap:6px;margin-top:16px}
+.idot{
+  height:5px;border-radius:5px;background:rgba(255,255,255,0.25);
+  transition:all .35s cubic-bezier(.4,0,.2,1);width:5px;
+}
+.idot.on{width:20px;background:linear-gradient(90deg,var(--cyan),var(--yellow))}
 
-/* REFEIÇÕES */
-.refeicoes{padding:28px 20px;background:var(--gray)}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.section-title-wrap{display:flex;align-items:center;gap:10px}
-.sec-icon{
-  width:38px;height:38px;background:var(--blue);border-radius:10px;
-  display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;
+/* ── FEATURES GRID ── */
+.features-sec{background:#fff;padding:28px 20px}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.feat-card{
+  background:var(--surface);border-radius:18px;padding:16px 14px;
+  position:relative;overflow:hidden;
+  border:1px solid rgba(26,58,239,0.07);
+  transition:transform .2s,box-shadow .2s;cursor:default;
 }
-.sec-title{font-size:17px;font-weight:800;color:var(--blue)}
+.feat-card:active{transform:scale(0.97)}
+.feat-card::before{
+  content:'';position:absolute;top:-20px;right:-20px;
+  width:70px;height:70px;border-radius:50%;
+  opacity:.12;
+}
+.feat-card:nth-child(1)::before{background:var(--blue)}
+.feat-card:nth-child(2)::before{background:var(--green)}
+.feat-card:nth-child(3)::before{background:var(--yellow)}
+.feat-card:nth-child(4)::before{background:var(--pink)}
+.feat-emoji{
+  font-size:28px;margin-bottom:10px;display:block;
+  filter:drop-shadow(0 3px 8px rgba(0,0,0,0.15));
+  transition:transform .2s;
+}
+.feat-card:hover .feat-emoji{transform:scale(1.2) rotate(-5deg)}
+.feat-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:4px}
+.feat-desc{font-size:11px;color:var(--muted);line-height:1.5}
+
+/* ── REFEIÇÕES ── */
+.refeicoes{background:var(--surface);padding:28px 20px}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.sec-left{display:flex;align-items:center;gap:10px}
+.sec-icon-wrap{
+  width:40px;height:40px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  position:relative;overflow:hidden;
+}
+.sec-icon-wrap.blue{background:linear-gradient(135deg,var(--blue),var(--cyan))}
+.sec-icon-wrap.purple{background:linear-gradient(135deg,var(--purple),var(--pink))}
+.sec-title{font-size:18px;font-weight:800;color:var(--text)}
 .sec-sub{font-size:11px;color:var(--muted)}
-.ver-link{color:var(--blue2);font-size:12px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:3px}
-.meals-col{display:flex;flex-direction:column;gap:14px}
+.sec-link{
+  font-size:12px;font-weight:700;color:var(--blue);
+  text-decoration:none;display:flex;align-items:center;gap:3px;
+  background:rgba(26,58,239,0.07);padding:6px 12px;border-radius:50px;
+}
+.meals-list{display:flex;flex-direction:column;gap:14px}
 .meal-card{
-  background:#fff;border-radius:16px;overflow:hidden;
-  box-shadow:0 2px 14px rgba(0,0,0,0.06);
-  display:flex;align-items:stretch;
-  cursor:pointer;transition:transform .2s,box-shadow .2s;
-  opacity:0;transform:translateY(30px);
+  background:#fff;border-radius:18px;overflow:hidden;
+  box-shadow:0 2px 16px rgba(26,58,239,0.07);
+  display:flex;cursor:pointer;
+  border:1px solid rgba(26,58,239,0.05);
+  opacity:0;transform:translateY(28px);
   transition:opacity .5s ease,transform .5s ease,box-shadow .2s;
 }
-.meal-card.visible{opacity:1;transform:translateY(0)}
-.meal-card:active{transform:scale(0.98)}
-.meal-card img{width:100px;height:100px;object-fit:cover;flex-shrink:0}
-.meal-body{padding:12px 14px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
-.meal-body h4{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px}
-.meal-body p{font-size:11px;color:var(--muted);line-height:1.5;flex:1}
-.meal-footer{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
-.badge-leve{background:#e8f5e9;color:#2e7d32;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px}
-.btn-add{
-  background:var(--blue2);color:#fff;border:none;
-  width:28px;height:28px;border-radius:8px;font-size:18px;font-weight:300;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:transform .15s,background .2s;line-height:1;
+.meal-card.in{opacity:1;transform:none}
+.meal-card:active{transform:scale(0.98) !important}
+.meal-thumb{width:106px;height:106px;object-fit:cover;flex-shrink:0}
+.meal-info{padding:12px 14px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.meal-name{font-size:13.5px;font-weight:800;color:var(--text);margin-bottom:4px}
+.meal-desc{font-size:11px;color:var(--muted);line-height:1.55;flex:1}
+.meal-foot{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
+.tag-leve{
+  background:linear-gradient(90deg,#e8fff1,#d0ffe3);
+  color:#1a7a40;font-size:9px;font-weight:800;
+  padding:3px 9px;border-radius:50px;letter-spacing:.3px;
 }
-.btn-add:active{transform:scale(0.9);background:var(--blue)}
-
-/* COUNTER ANIM */
-.added-anim{
-  position:fixed;top:80px;right:20px;
-  background:var(--green);color:#fff;
-  padding:8px 14px;border-radius:50px;
-  font-size:12px;font-weight:700;
-  z-index:999;
-  animation:popIn .3s ease both, fadeOut .3s ease 1.2s both;
-  pointer-events:none;
+.tag-full{color:var(--muted);font-size:10px}
+.add-btn{
+  width:30px;height:30px;border-radius:9px;border:none;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:#fff;font-size:20px;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-weight:300;
+  box-shadow:0 4px 12px rgba(26,58,239,0.35);
+  transition:transform .15s,box-shadow .15s;
+  position:relative;overflow:hidden;
 }
-@keyframes popIn{from{opacity:0;transform:scale(0.7) translateY(-10px)}to{opacity:1;transform:scale(1)}}
-@keyframes fadeOut{to{opacity:0;transform:translateY(-10px)}}
+.add-btn:active{transform:scale(0.88);box-shadow:none}
 
-/* SOBREMESAS */
-.sobremesas{padding:28px 20px;background:#fff}
-.desserts-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
-.desserts-scroll::-webkit-scrollbar{display:none}
+/* ── SOBREMESAS ── */
+.sobremesas{background:#fff;padding:28px 20px}
+.desserts-row{
+  display:flex;gap:12px;overflow-x:auto;
+  padding-bottom:6px;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.desserts-row::-webkit-scrollbar{display:none}
 .dessert-card{
-  flex-shrink:0;width:140px;cursor:pointer;
-  opacity:0;transform:scale(0.9);
+  flex-shrink:0;width:136px;cursor:pointer;
+  opacity:0;transform:scale(0.88) translateY(12px);
   transition:opacity .5s ease,transform .5s ease;
 }
-.dessert-card.visible{opacity:1;transform:scale(1)}
-.dessert-card img{
-  width:140px;height:120px;border-radius:14px;object-fit:cover;
-  margin-bottom:8px;transition:transform .2s;
-  box-shadow:0 4px 16px rgba(0,0,0,0.1);
+.dessert-card.in{opacity:1;transform:none}
+.dessert-img-wrap{
+  position:relative;border-radius:16px;overflow:hidden;
+  margin-bottom:10px;height:118px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.12);
 }
-.dessert-card:active img{transform:scale(0.96)}
-.dessert-card h4{font-size:12px;font-weight:700;color:var(--text)}
-.dessert-card p{font-size:10px;color:var(--muted);line-height:1.4;margin-top:2px}
+.dessert-img-wrap img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .35s;
+}
+.dessert-card:hover .dessert-img-wrap img{transform:scale(1.07)}
+.dessert-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.25),transparent);
+}
+.dessert-card h4{font-size:12.5px;font-weight:800;color:var(--text);margin-bottom:3px}
+.dessert-card p{font-size:10.5px;color:var(--muted);line-height:1.4}
 
-/* NUTRIÇÃO BANNER */
-.nutri-banner{
-  background:linear-gradient(135deg,#0f2567,var(--blue2));
-  padding:28px 20px;text-align:center;
+/* ── STATS ── */
+.stats-sec{
+  background:linear-gradient(160deg,#040d30 0%,#0a1f6e 40%,#1532b8 70%,#0a99cc 100%);
+  padding:34px 20px;text-align:center;position:relative;overflow:hidden;
 }
-.nutri-banner h3{font-size:18px;font-weight:900;color:#fff;margin-bottom:8px}
-.nutri-banner p{font-size:12px;color:rgba(255,255,255,0.75);margin-bottom:20px;line-height:1.6}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-.stat-card{
-  background:rgba(255,255,255,0.12);border-radius:14px;padding:14px 8px;text-align:center;
+.stats-sec::before{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,212,255,0.08),transparent 70%);
+  animation:breathe 4s ease infinite;
+}
+@keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.2)}}
+.stats-sec h3{font-size:20px;font-weight:900;color:#fff;margin-bottom:8px;position:relative}
+.stats-sec p{font-size:12.5px;color:rgba(255,255,255,0.68);line-height:1.65;margin-bottom:24px;position:relative}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px;position:relative}
+.stat-box{
+  background:rgba(255,255,255,0.08);border-radius:16px;padding:16px 8px;
+  border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(8px);
+  transition:transform .2s;
+}
+.stat-box:active{transform:scale(0.96)}
+.stat-num{
+  display:block;font-size:30px;font-weight:900;color:#fff;
+  background:linear-gradient(135deg,var(--cyan),var(--yellow));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  font-variant-numeric:tabular-nums;
+}
+.stat-suf{font-size:18px;font-weight:900}
+.stat-lbl{font-size:9.5px;color:rgba(255,255,255,0.6);margin-top:3px;display:block;line-height:1.4}
+
+/* ── FOOTER ── */
+footer{
+  background:linear-gradient(160deg,#040d30,#0a1f6e);
+  padding:28px 20px 36px;
+}
+.foot-brand{display:flex;align-items:center;gap:9px;margin-bottom:18px}
+.foot-logo{
+  width:36px;height:36px;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:900;color:#fff;
+}
+.foot-brand-text strong{display:block;font-size:13px;font-weight:900;color:#fff;letter-spacing:.5px}
+.foot-brand-text small{font-size:8.5px;color:rgba(255,255,255,0.4);letter-spacing:1.5px;text-transform:uppercase}
+.foot-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+.foot-tag{
+  padding:6px 13px;border-radius:50px;font-size:11px;font-weight:600;
+  background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.75);
   border:1px solid rgba(255,255,255,0.1);
 }
-.stat-num{
-  font-size:26px;font-weight:900;color:#fff;
-  display:block;font-variant-numeric:tabular-nums;
-}
-.stat-label{font-size:10px;color:rgba(255,255,255,0.7);margin-top:2px;display:block;line-height:1.3}
+.foot-divider{height:1px;background:rgba(255,255,255,0.07);margin-bottom:16px}
+.foot-copy{font-size:10px;color:rgba(255,255,255,0.3);text-align:center}
 
-/* FOOTER MINI */
-.footer{
-  background:var(--blue);padding:24px 20px 36px;
-}
-.footer-logo{display:flex;align-items:center;gap:8px;margin-bottom:16px}
-.footer-logo-icon{
-  width:34px;height:34px;background:rgba(255,255,255,0.15);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:900;
-}
-.footer-logo-text strong{display:block;font-size:13px;font-weight:900;color:#fff;letter-spacing:1px}
-.footer-logo-text span{font-size:8px;color:rgba(255,255,255,0.5);letter-spacing:1.5px;text-transform:uppercase}
-.footer-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
-.footer-pill{
-  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
-  border-radius:50px;padding:6px 14px;font-size:11px;color:rgba(255,255,255,0.8);font-weight:500;
-}
-.footer-bottom{font-size:10px;color:rgba(255,255,255,0.4);text-align:center;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08)}
-
-/* BOTTOM NAV */
+/* ── BOTTOM NAV ── */
 .bottom-nav{
   position:fixed;bottom:0;left:50%;transform:translateX(-50%);
-  width:430px;background:#fff;
+  width:min(430px,100vw);background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(20px);
   display:flex;justify-content:space-around;align-items:center;
-  height:64px;padding:0 8px;
-  box-shadow:0 -4px 20px rgba(0,0,0,0.1);
-  z-index:200;border-top:1px solid #f0f0f0;
+  height:66px;padding:0 6px;
+  box-shadow:0 -1px 0 rgba(0,0,0,0.06),0 -8px 32px rgba(0,0,0,0.08);
+  z-index:200;
 }
-.nav-item{
+.bnav-item{
   display:flex;flex-direction:column;align-items:center;gap:3px;
-  cursor:pointer;padding:6px 12px;border-radius:12px;
-  transition:background .2s;font-size:9px;color:var(--muted);font-weight:600;
+  cursor:pointer;padding:6px 14px;border-radius:14px;
+  transition:background .2s;font-size:9.5px;color:var(--muted);font-weight:700;
+  min-width:52px;
 }
-.nav-item.active{color:var(--blue2)}
-.nav-item:active{background:var(--gray)}
-.nav-item .ni{font-size:20px}
-.nav-item.active .ni{animation:navBounce .3s ease}
-@keyframes navBounce{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+.bnav-item .bni{
+  font-size:22px;
+  filter:grayscale(1) opacity(.5);
+  transition:filter .2s,transform .2s;
+}
+.bnav-item.on{color:var(--blue)}
+.bnav-item.on .bni{filter:none;animation:navPop .3s cubic-bezier(.4,0,.2,1)}
+@keyframes navPop{0%{transform:scale(1)}50%{transform:scale(1.35)}100%{transform:scale(1)}}
+.bnav-item:active{background:var(--surface)}
 
-/* RIPPLE */
+/* ── TOAST ── */
+.toast{
+  position:fixed;top:76px;left:50%;transform:translateX(-50%) translateY(-10px);
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:#fff;padding:10px 20px;border-radius:50px;
+  font-size:12.5px;font-weight:700;z-index:999;
+  box-shadow:0 8px 28px rgba(26,58,239,0.4);
+  animation:toastIn .3s ease both, toastOut .3s ease 1.4s both;
+  pointer-events:none;white-space:nowrap;
+}
+@keyframes toastIn{to{transform:translateX(-50%) translateY(0);opacity:1}from{opacity:0}}
+@keyframes toastOut{to{transform:translateX(-50%) translateY(-12px);opacity:0}}
+
+/* ── RIPPLE ── */
 .ripple{
   position:absolute;border-radius:50%;
-  background:rgba(255,255,255,0.3);
-  animation:rippleAnim .6s ease out;
+  background:rgba(255,255,255,0.25);
+  transform:scale(0);animation:ripAnim .55s ease-out forwards;
   pointer-events:none;
 }
-@keyframes rippleAnim{
-  from{transform:scale(0);opacity:1}
-  to{transform:scale(4);opacity:0}
-}
+@keyframes ripAnim{to{transform:scale(4.5);opacity:0}}
 
-/* SCROLL FAB */
-.scroll-fab{
-  position:fixed;bottom:80px;right:16px;
-  width:44px;height:44px;background:var(--blue2);
+/* ── FAB ── */
+.fab{
+  position:fixed;bottom:80px;right:14px;
+  width:46px;height:46px;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
   border-radius:50%;display:flex;align-items:center;justify-content:center;
   color:#fff;font-size:20px;cursor:pointer;
-  box-shadow:0 4px 16px rgba(45,91,227,0.4);
+  box-shadow:0 6px 20px rgba(26,58,239,0.45);
   transition:transform .2s,opacity .3s;opacity:0;pointer-events:none;z-index:199;
 }
-.scroll-fab.visible{opacity:1;pointer-events:auto}
-.scroll-fab:active{transform:scale(0.92)}
+.fab.on{opacity:1;pointer-events:auto}
+.fab:active{transform:scale(0.9)}
 
-body{padding-bottom:64px}
+@media(max-width:360px){
+  .hero h1{font-size:29px}
+  .day-card{width:124px}
+  .dessert-card{width:120px}
+}
 </style>
 </head>
 <body>
 
 <!-- SPLASH -->
 <div id="splash">
-  <div class="splash-logo">P</div>
-  <div class="splash-brand">POLIVALENTE</div>
-  <div class="splash-sub">Escola que Transforma</div>
-  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+  <div class="splash-ring"><div class="splash-p">P</div></div>
+  <div class="splash-name">POLIVALENTE</div>
+  <div class="splash-tag">Escola que Transforma</div>
+  <div class="splash-progress"><div class="splash-fill"></div></div>
 </div>
 
 <!-- NAV -->
 <nav>
   <a href="#" class="logo">
-    <div class="logo-icon">P</div>
-    <div class="logo-text">
+    <div class="logo-mark">P</div>
+    <div class="logo-words">
       <strong>POLIVALENTE</strong>
-      <span>Escola que Transforma</span>
+      <small>Escola que Transforma</small>
     </div>
   </a>
-  <div class="nav-right">
-    <button class="btn-pedido" id="btnPedido">🛒 <span class="badge" id="cartCount">0</span></button>
-    <button class="hamburger" aria-label="Menu">
+  <div class="nav-actions">
+    <button class="cart-btn" id="cartBtn">
+      🛒 <span class="cart-num" id="cartN">0</span>
+    </button>
+    <button class="menu-btn" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -420,166 +653,211 @@ body{padding-bottom:64px}
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-particles" id="particles"></div>
-  <div class="floating-emojis" id="floatingEmojis"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="hero-mesh"></div>
+  <div id="heroParticles" style="position:absolute;inset:0;pointer-events:none"></div>
+  <div id="foodFloats" style="position:absolute;inset:0;pointer-events:none"></div>
 
-  <div class="hero-badge">❤️ Alimentação Escolar Saudável</div>
-  <div class="hero-plate-wrap">
-    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&h=500&fit=crop" alt="Prato saudável">
-    <div class="nutri-badge">
-      <div class="ni">👩‍⚕️</div>
-      CARDÁPIO<br>PLANEJADO POR<br>NUTRICIONISTAS
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    Alimentação Escolar Saudável
+  </div>
+
+  <div class="hero-plate-area">
+    <div class="plate-glow"></div>
+    <div class="plate-ring"></div>
+    <img class="plate-img"
+      src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&h=500&fit=crop"
+      alt="Prato nutritivo">
+    <div class="nutri-seal">
+      <div class="seal-icon">👩‍⚕️</div>
+      <p>Cardápio<br>Planejado por<br>Nutricionistas</p>
     </div>
   </div>
-  <h1>Alimentação que cuida hoje, <span>transforma o amanhã.</span></h1>
+
+  <h1>Alimentação que cuida hoje, <em>transforma o amanhã.</em></h1>
   <p>Refeições elaboradas por nutricionistas com ingredientes selecionados para promover saúde, bem-estar e melhor desempenho no aprendizado.</p>
-  <div class="hero-buttons">
-    <button class="btn-hero-primary" onclick="rippleEffect(event,this)">🌿 Conheça nosso cardápio</button>
-    <button class="btn-hero-secondary" onclick="rippleEffect(event,this)">Saiba mais sobre nutrição</button>
+
+  <div class="hero-btns">
+    <button class="btn-main" onclick="ripple(event,this)">🌿 Conheça nosso cardápio</button>
+    <button class="btn-outline" onclick="ripple(event,this)">Saiba mais sobre nutrição</button>
   </div>
-  <div class="hero-approve">
-    <div class="avatars">
-      <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=56&h=56&fit=crop&crop=face" alt="n1">
-      <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=56&h=56&fit=crop&crop=face" alt="n2">
-      <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=56&h=56&fit=crop&crop=face" alt="n3">
+
+  <div class="hero-social">
+    <div class="avatars-stack">
+      <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=60&h=60&fit=crop&crop=face" alt="">
+      <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=60&h=60&fit=crop&crop=face" alt="">
+      <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" alt="">
     </div>
-    <div class="approve-text">
-      <strong><span class="check-badge">✓</span> Aprovado por nutricionistas</strong>
+    <div class="social-text">
+      <strong><span class="verified">✓</span> Aprovado por nutricionistas</strong>
       Equipe especializada em nutrição escolar
     </div>
   </div>
 </section>
 
-<!-- FEATURES SCROLL -->
-<div class="features-scroll">
-  <div class="features-track" id="featuresTrack">
-    <div class="feature-pill"><span class="fi">🥦</span><span>Alimentação Balanceada</span></div>
-    <div class="feature-pill"><span class="fi">🛡️</span><span>Saúde e Bem-estar</span></div>
-    <div class="feature-pill"><span class="fi">📋</span><span>Planejado por Nutricionistas</span></div>
-    <div class="feature-pill"><span class="fi">❤️</span><span>Hábitos que Transformam</span></div>
-    <div class="feature-pill"><span class="fi">✨</span><span>Ingredientes Selecionados</span></div>
-    <div class="feature-pill"><span class="fi">🌱</span><span>Produtos Frescos</span></div>
-    <!-- duplicate for seamless -->
-    <div class="feature-pill"><span class="fi">🥦</span><span>Alimentação Balanceada</span></div>
-    <div class="feature-pill"><span class="fi">🛡️</span><span>Saúde e Bem-estar</span></div>
-    <div class="feature-pill"><span class="fi">📋</span><span>Planejado por Nutricionistas</span></div>
-    <div class="feature-pill"><span class="fi">❤️</span><span>Hábitos que Transformam</span></div>
-    <div class="feature-pill"><span class="fi">✨</span><span>Ingredientes Selecionados</span></div>
-    <div class="feature-pill"><span class="fi">🌱</span><span>Produtos Frescos</span></div>
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker">
+    <span class="tick-item"><span class="tick-dot"></span>🥦 Alimentação Balanceada</span>
+    <span class="tick-item"><span class="tick-dot"></span>🛡️ Saúde e Bem-estar</span>
+    <span class="tick-item"><span class="tick-dot"></span>📋 Planejado por Nutricionistas</span>
+    <span class="tick-item"><span class="tick-dot"></span>❤️ Hábitos que Transformam</span>
+    <span class="tick-item"><span class="tick-dot"></span>🌱 Produtos Frescos</span>
+    <span class="tick-item"><span class="tick-dot"></span>✨ Ingredientes Selecionados</span>
+    <span class="tick-item"><span class="tick-dot"></span>🥦 Alimentação Balanceada</span>
+    <span class="tick-item"><span class="tick-dot"></span>🛡️ Saúde e Bem-estar</span>
+    <span class="tick-item"><span class="tick-dot"></span>📋 Planejado por Nutricionistas</span>
+    <span class="tick-item"><span class="tick-dot"></span>❤️ Hábitos que Transformam</span>
+    <span class="tick-item"><span class="tick-dot"></span>🌱 Produtos Frescos</span>
+    <span class="tick-item"><span class="tick-dot"></span>✨ Ingredientes Selecionados</span>
   </div>
 </div>
 
 <!-- ESPECIAIS DA SEMANA -->
 <section class="especiais">
-  <div class="section-label">⭐ Especiais da Semana</div>
+  <div class="chip"><span class="chip-icon">⭐</span> Especiais da Semana</div>
   <h2>Pratos especiais para dias ainda melhores!</h2>
-  <p>Receitas deliciosas, nutritivas e preparadas com cuidado para variar e surpreender.</p>
-  <button class="btn-white" onclick="rippleEffect(event,this)">Ver cardápio completo →</button>
+  <p>Receitas deliciosas, nutritivas e preparadas com cuidado para variar e surpreender toda semana.</p>
+  <button class="btn-glass" onclick="ripple(event,this)">📖 Ver cardápio completo →</button>
   <div class="days-scroll" id="daysScroll">
-    <div class="day-card" data-day="0">
+    <div class="day-card" data-i="0">
       <div class="day-name">Segunda</div>
       <div class="day-date">20/05</div>
-      <img src="https://images.unsplash.com/photo-1604909052743-94e838986d24?w=220&h=150&fit=crop" alt="Segunda">
+      <img src="https://images.unsplash.com/photo-1604909052743-94e838986d24?w=220&h=150&fit=crop" alt="">
       <div class="day-meal">Frango grelhado ao molho de ervas com arroz integral e legumes</div>
     </div>
-    <div class="day-card" data-day="1">
+    <div class="day-card" data-i="1">
       <div class="day-name">Terça</div>
       <div class="day-date">21/05</div>
-      <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=220&h=150&fit=crop" alt="Terça">
+      <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=220&h=150&fit=crop" alt="">
       <div class="day-meal">Macarrão ao molho de tomate natural com almôndegas assadas</div>
     </div>
-    <div class="day-card active" data-day="2">
+    <div class="day-card active" data-i="2">
       <div class="day-name">Quarta</div>
       <div class="day-date">22/05</div>
-      <div class="special-badge">ESPECIAL</div>
-      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=220&h=150&fit=crop" alt="Quarta">
+      <div class="special-tag">ESPECIAL</div>
+      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=220&h=150&fit=crop" alt="">
       <div class="day-meal">Estrogonofe de frango com arroz branco e batata palha</div>
     </div>
-    <div class="day-card" data-day="3">
+    <div class="day-card" data-i="3">
       <div class="day-name">Quinta</div>
       <div class="day-date">23/05</div>
-      <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=220&h=150&fit=crop" alt="Quinta">
+      <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=220&h=150&fit=crop" alt="">
       <div class="day-meal">Escondidinho de carne moída com purê de mandioquinha</div>
     </div>
-    <div class="day-card" data-day="4">
+    <div class="day-card" data-i="4">
       <div class="day-name">Sexta</div>
       <div class="day-date">24/05</div>
-      <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=220&h=150&fit=crop" alt="Sexta">
+      <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=220&h=150&fit=crop" alt="">
       <div class="day-meal">Bowl nutritivo com frango desfiado, quinoa, feijão e legumes</div>
     </div>
   </div>
-  <div class="dots" id="dayDots">
-    <div class="dot"></div>
-    <div class="dot active"></div>
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+  <div class="indicator-dots" id="dots">
+    <div class="idot"></div><div class="idot on"></div><div class="idot on"></div>
+    <div class="idot"></div><div class="idot"></div>
   </div>
 </section>
 
-<!-- REFEIÇÕES DO DIA -->
+<!-- FEATURES GRID -->
+<section class="features-sec">
+  <div class="sec-head">
+    <div class="sec-left">
+      <div>
+        <div class="sec-title">Por que a Polivalente?</div>
+        <div class="sec-sub">Diferenciais que fazem a diferença</div>
+      </div>
+    </div>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="feat-emoji">🥗</span>
+      <div class="feat-title">Alimentação Balanceada</div>
+      <div class="feat-desc">Refeições completas e nutritivas todos os dias.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-emoji">🛡️</span>
+      <div class="feat-title">Saúde e Bem-estar</div>
+      <div class="feat-desc">Ingredientes com qualidade e segurança alimentar.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-emoji">👩‍⚕️</span>
+      <div class="feat-title">Nutricionistas</div>
+      <div class="feat-desc">Cardápios desenvolvidos por especialistas.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-emoji">🌱</span>
+      <div class="feat-title">Hábitos Saudáveis</div>
+      <div class="feat-desc">Educando para escolhas melhores todos os dias.</div>
+    </div>
+  </div>
+</section>
+
+<!-- REFEIÇÕES -->
 <section class="refeicoes">
-  <div class="section-header">
-    <div class="section-title-wrap">
-      <div class="sec-icon">🍴</div>
+  <div class="sec-head">
+    <div class="sec-left">
+      <div class="sec-icon-wrap blue">🍴</div>
       <div>
         <div class="sec-title">Refeições do Dia</div>
         <div class="sec-sub">Opções para uma rotina saudável</div>
       </div>
     </div>
-    <a href="#" class="ver-link">Ver mais →</a>
+    <a href="#" class="sec-link">Ver mais →</a>
   </div>
-  <div class="meals-col" id="mealsCol">
+  <div class="meals-list" id="mealsList">
     <div class="meal-card">
-      <img src="https://images.unsplash.com/photo-1516684732162-798a0062be99?w=300&h=200&fit=crop" alt="Prato 1">
-      <div class="meal-body">
+      <img class="meal-thumb" src="https://images.unsplash.com/photo-1516684732162-798a0062be99?w=300&h=200&fit=crop" alt="">
+      <div class="meal-info">
         <div>
-          <h4>Arroz, Feijão e Frango</h4>
-          <p>Clássico e nutritivo! Arroz branco, feijão carioca, peito de frango grelhado e legumes cozidos.</p>
+          <div class="meal-name">Arroz, Feijão e Frango</div>
+          <div class="meal-desc">Clássico nutritivo! Arroz branco, feijão carioca, frango grelhado e legumes cozidos.</div>
         </div>
-        <div class="meal-footer">
-          <span style="font-size:12px;color:var(--muted)">Prato completo</span>
-          <button class="btn-add" onclick="addToCart(event,'Arroz, Feijão e Frango')">+</button>
+        <div class="meal-foot">
+          <span class="tag-full">Prato completo</span>
+          <button class="add-btn" onclick="addCart(event,'Arroz, Feijão e Frango')">+</button>
         </div>
       </div>
     </div>
     <div class="meal-card">
-      <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=300&h=200&fit=crop" alt="Prato 2">
-      <div class="meal-body">
+      <img class="meal-thumb" src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=300&h=200&fit=crop" alt="">
+      <div class="meal-info">
         <div>
-          <h4>Arroz, Feijão e Macarrão</h4>
-          <p>Combinação que dá energia! Arroz branco, feijão carioca, macarrão ao sugo e legumes.</p>
+          <div class="meal-name">Arroz, Feijão e Macarrão</div>
+          <div class="meal-desc">Combinação que dá energia! Arroz branco, feijão carioca, macarrão ao sugo.</div>
         </div>
-        <div class="meal-footer">
-          <span style="font-size:12px;color:var(--muted)">Prato completo</span>
-          <button class="btn-add" onclick="addToCart(event,'Arroz, Feijão e Macarrão')">+</button>
+        <div class="meal-foot">
+          <span class="tag-full">Prato completo</span>
+          <button class="add-btn" onclick="addCart(event,'Arroz, Feijão e Macarrão')">+</button>
         </div>
       </div>
     </div>
     <div class="meal-card">
-      <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=200&fit=crop" alt="Prato 3">
-      <div class="meal-body">
+      <img class="meal-thumb" src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=200&fit=crop" alt="">
+      <div class="meal-info">
         <div>
-          <h4>Arroz, Feijão e Carne Moída</h4>
-          <p>Arroz branco, feijão carioca, carne moída refogada e salada verde.</p>
+          <div class="meal-name">Arroz, Feijão e Carne Moída</div>
+          <div class="meal-desc">Arroz branco, feijão carioca, carne moída refogada e salada verde.</div>
         </div>
-        <div class="meal-footer">
-          <span style="font-size:12px;color:var(--muted)">Prato completo</span>
-          <button class="btn-add" onclick="addToCart(event,'Arroz, Feijão e Carne Moída')">+</button>
+        <div class="meal-foot">
+          <span class="tag-full">Prato completo</span>
+          <button class="add-btn" onclick="addCart(event,'Arroz, Feijão e Carne Moída')">+</button>
         </div>
       </div>
     </div>
     <div class="meal-card">
-      <img src="https://images.unsplash.com/photo-1604909052743-94e838986d24?w=300&h=200&fit=crop" alt="Prato 4">
-      <div class="meal-body">
+      <img class="meal-thumb" src="https://images.unsplash.com/photo-1604909052743-94e838986d24?w=300&h=200&fit=crop" alt="">
+      <div class="meal-info">
         <div>
-          <span class="badge-leve">Opção Leve</span>
-          <h4>Frango Grelhado com Legumes</h4>
-          <p>Peito de frango grelhado com legumes no vapor e arroz integral.</p>
+          <span class="tag-leve">✦ Opção Leve</span>
+          <div class="meal-name" style="margin-top:5px">Frango Grelhado com Legumes</div>
+          <div class="meal-desc">Frango grelhado com legumes no vapor e arroz integral.</div>
         </div>
-        <div class="meal-footer">
-          <span style="font-size:12px;color:var(--muted)">Leve &amp; saudável</span>
-          <button class="btn-add" onclick="addToCart(event,'Frango Grelhado com Legumes')">+</button>
+        <div class="meal-foot">
+          <span class="tag-full">Leve &amp; saudável</span>
+          <button class="add-btn" onclick="addCart(event,'Frango com Legumes')">+</button>
         </div>
       </div>
     </div>
@@ -588,224 +866,269 @@ body{padding-bottom:64px}
 
 <!-- SOBREMESAS -->
 <section class="sobremesas">
-  <div class="section-header">
-    <div class="section-title-wrap">
-      <div class="sec-icon" style="background:var(--purple)">🧁</div>
+  <div class="sec-head">
+    <div class="sec-left">
+      <div class="sec-icon-wrap purple">🧁</div>
       <div>
         <div class="sec-title" style="color:var(--purple)">Sobremesas</div>
         <div class="sec-sub">Deliciosas e equilibradas</div>
       </div>
     </div>
-    <a href="#" class="ver-link" style="color:var(--purple)">Ver mais →</a>
+    <a href="#" class="sec-link" style="color:var(--purple);background:rgba(124,58,237,0.07)">Ver mais →</a>
   </div>
-  <div class="desserts-scroll">
+  <div class="desserts-row">
     <div class="dessert-card">
-      <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=280&h=220&fit=crop" alt="Fruta">
-      <h4>Fruta da Estação</h4>
+      <div class="dessert-img-wrap">
+        <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=280&h=230&fit=crop" alt="Fruta">
+        <div class="dessert-overlay"></div>
+      </div>
+      <h4>🍓 Fruta da Estação</h4>
       <p>Opções variadas todos os dias.</p>
     </div>
     <div class="dessert-card">
-      <img src="https://images.unsplash.com/photo-1584395630827-860eee694d7b?w=280&h=220&fit=crop" alt="Gelatina">
-      <h4>Gelatina Natural</h4>
+      <div class="dessert-img-wrap">
+        <img src="https://images.unsplash.com/photo-1584395630827-860eee694d7b?w=280&h=230&fit=crop" alt="Gelatina">
+        <div class="dessert-overlay"></div>
+      </div>
+      <h4>🍮 Gelatina Natural</h4>
       <p>Feita com suco natural, menos açúcar.</p>
     </div>
     <div class="dessert-card">
-      <img src="https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?w=280&h=220&fit=crop" alt="Mousse">
-      <h4>Mousse de Chocolate</h4>
+      <div class="dessert-img-wrap">
+        <img src="https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?w=280&h=230&fit=crop" alt="Mousse">
+        <div class="dessert-overlay"></div>
+      </div>
+      <h4>🍫 Mousse de Cacau</h4>
       <p>Feito com cacau selecionado.</p>
     </div>
     <div class="dessert-card">
-      <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=280&h=220&fit=crop" alt="Iogurte">
-      <h4>Iogurte com Frutas</h4>
-      <p>Iogurte natural com frutas frescas.</p>
+      <div class="dessert-img-wrap">
+        <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=280&h=230&fit=crop" alt="Iogurte">
+        <div class="dessert-overlay"></div>
+      </div>
+      <h4>🫙 Iogurte com Frutas</h4>
+      <p>Natural com frutas frescas da estação.</p>
     </div>
     <div class="dessert-card">
-      <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=280&h=220&fit=crop" alt="Bolo">
-      <h4>Bolo Caseiro</h4>
+      <div class="dessert-img-wrap">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=280&h=230&fit=crop" alt="Bolo">
+        <div class="dessert-overlay"></div>
+      </div>
+      <h4>🎂 Bolo Caseiro</h4>
       <p>Fatia caseira com menos açúcar.</p>
     </div>
   </div>
 </section>
 
-<!-- NUTRIÇÃO BANNER -->
-<section class="nutri-banner">
+<!-- STATS -->
+<section class="stats-sec">
   <h3>🥗 Comer bem é aprender melhor!</h3>
-  <p>Uma escola que cuida da alimentação cuida do futuro dos seus alunos.</p>
+  <p>Uma escola que cuida da alimentação cuida do futuro dos seus alunos. Cada refeição é um investimento no aprendizado.</p>
   <div class="stats-grid">
-    <div class="stat-card">
-      <span class="stat-num" data-target="98">0</span>
-      <span class="stat-label">% aprovação<br>dos alunos</span>
+    <div class="stat-box">
+      <span class="stat-num" data-t="98" data-s="%">0</span>
+      <span class="stat-lbl">aprovação<br>dos alunos</span>
     </div>
-    <div class="stat-card">
-      <span class="stat-num" data-target="12">0</span>
-      <span class="stat-label">nutricionistas<br>dedicados</span>
+    <div class="stat-box">
+      <span class="stat-num" data-t="12" data-s="">0</span>
+      <span class="stat-lbl">nutricionistas<br>dedicados</span>
     </div>
-    <div class="stat-card">
-      <span class="stat-num" data-target="350">0</span>
-      <span class="stat-label">refeições<br>por semana</span>
+    <div class="stat-box">
+      <span class="stat-num" data-t="350" data-s="+">0</span>
+      <span class="stat-lbl">refeições<br>por semana</span>
     </div>
   </div>
-  <button class="btn-white" onclick="rippleEffect(event,this)">📞 Fale com a escola</button>
+  <button class="btn-glass" onclick="ripple(event,this)" style="margin:0 auto;display:flex">
+    📞 Fale com a escola
+  </button>
 </section>
 
 <!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-logo">
-    <div class="footer-logo-icon">P</div>
-    <div class="footer-logo-text">
+<footer>
+  <div class="foot-brand">
+    <div class="foot-logo">P</div>
+    <div class="foot-brand-text">
       <strong>POLIVALENTE</strong>
-      <span>Escola que Transforma</span>
+      <small>Escola que Transforma</small>
     </div>
   </div>
-  <div class="footer-pills">
-    <div class="footer-pill">🥦 Alimentação saudável</div>
-    <div class="footer-pill">📋 Cardápio semanal</div>
-    <div class="footer-pill">❤️ Nutrição escolar</div>
-    <div class="footer-pill">🌿 Produtos frescos</div>
+  <div class="foot-tags">
+    <span class="foot-tag">🥦 Alimentação saudável</span>
+    <span class="foot-tag">📋 Cardápio semanal</span>
+    <span class="foot-tag">❤️ Nutrição escolar</span>
+    <span class="foot-tag">🌿 Produtos frescos</span>
+    <span class="foot-tag">👩‍⚕️ Nutricionistas</span>
   </div>
-  <div class="footer-bottom">© 2025 Polivalente Escola. Todos os direitos reservados.</div>
+  <div class="foot-divider"></div>
+  <div class="foot-copy">© 2025 Polivalente Escola. Todos os direitos reservados.</div>
 </footer>
 
 <!-- SCROLL FAB -->
-<div class="scroll-fab" id="scrollFab" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+<div class="fab" id="fab" onclick="scrollTop()">↑</div>
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
-  <div class="nav-item active" onclick="setNav(this)"><span class="ni">🏠</span>Início</div>
-  <div class="nav-item" onclick="setNav(this)"><span class="ni">📋</span>Cardápio</div>
-  <div class="nav-item" onclick="setNav(this)"><span class="ni">⭐</span>Especiais</div>
-  <div class="nav-item" onclick="setNav(this)"><span class="ni">🥗</span>Nutrição</div>
-  <div class="nav-item" onclick="setNav(this)"><span class="ni">👤</span>Perfil</div>
+  <div class="bnav-item on" onclick="setNav(this)"><span class="bni">🏠</span>Início</div>
+  <div class="bnav-item" onclick="setNav(this)"><span class="bni">📋</span>Cardápio</div>
+  <div class="bnav-item" onclick="setNav(this)"><span class="bni">⭐</span>Especiais</div>
+  <div class="bnav-item" onclick="setNav(this)"><span class="bni">🥗</span>Nutrição</div>
+  <div class="bnav-item" onclick="setNav(this)"><span class="bni">👤</span>Perfil</div>
 </div>
 
 <script>
-// SPLASH
+/* ─── SPLASH ─── */
 window.addEventListener('load',()=>{
   setTimeout(()=>{
-    document.getElementById('splash').classList.add('hide');
-    setTimeout(()=>document.getElementById('splash').remove(),700);
-  },2000);
+    const s=document.getElementById('splash');
+    s.classList.add('out');
+    setTimeout(()=>s.remove(),750);
+  },2100);
 });
 
-// PARTICLES
+/* ─── PARTICLES in HERO ─── */
 (function(){
-  const container=document.getElementById('particles');
-  const colors=['rgba(77,216,240,0.6)','rgba(255,255,255,0.4)','rgba(255,209,102,0.5)','rgba(255,107,157,0.4)'];
-  function spawnParticle(){
+  const el=document.getElementById('heroParticles');
+  const colors=['rgba(0,212,255,.7)','rgba(255,255,255,.5)','rgba(255,204,0,.6)','rgba(255,77,141,.5)','rgba(0,230,118,.5)'];
+  function spawn(){
     const p=document.createElement('div');
-    p.className='particle';
-    const size=Math.random()*8+4;
-    const x=Math.random()*100;
-    const dur=Math.random()*6+5;
-    const delay=Math.random()*4;
-    p.style.cssText=`width:${size}px;height:${size}px;left:${x}%;bottom:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${dur}s;animation-delay:${delay}s`;
-    container.appendChild(p);
-    setTimeout(()=>p.remove(),(dur+delay)*1000+200);
+    const sz=Math.random()*7+3;
+    const dur=Math.random()*7+6;
+    const delay=Math.random()*3;
+    p.style.cssText=`
+      position:absolute;border-radius:50%;pointer-events:none;
+      width:${sz}px;height:${sz}px;
+      left:${Math.random()*100}%;bottom:-10px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation:floatPart ${dur}s ${delay}s linear both;
+    `;
+    el.appendChild(p);
+    setTimeout(()=>p.remove(),(dur+delay)*1000+300);
   }
-  setInterval(spawnParticle,400);
-  for(let i=0;i<10;i++) spawnParticle();
+  // inject keyframe once
+  const kf=document.createElement('style');
+  kf.textContent='@keyframes floatPart{0%{opacity:0;transform:translateY(0) scale(0)}8%{opacity:1}92%{opacity:.8}100%{opacity:0;transform:translateY(-380px) scale(1.8)}}';
+  document.head.appendChild(kf);
+  setInterval(spawn,350);
+  for(let i=0;i<12;i++) spawn();
 })();
 
-// FLOATING EMOJIS
+/* ─── FOOD FLOATS ─── */
 (function(){
-  const emojis=['🥦','🍗','🍎','🥕','🌽','🍅','🥑','🫐'];
-  const container=document.getElementById('floatingEmojis');
-  emojis.forEach((em,i)=>{
-    const el=document.createElement('div');
-    el.className='fem';
-    const x=10+Math.random()*80;
-    const y=5+Math.random()*85;
+  const foods=['🥦','🍗','🥕','🌽','🍅','🥑','🍳','🫐','🥝','🍋'];
+  const el=document.getElementById('foodFloats');
+  foods.forEach((f,i)=>{
+    const d=document.createElement('div');
+    const x=5+Math.random()*88;
+    const y=3+Math.random()*88;
     const dur=3+Math.random()*3;
-    const delay=i*0.4;
-    el.style.cssText=`left:${x}%;top:${y}%;animation-duration:${dur}s;animation-delay:${delay}s;opacity:0.18;font-size:${16+Math.random()*10}px`;
-    el.textContent=em;
-    container.appendChild(el);
+    const sz=16+Math.random()*12;
+    d.style.cssText=`
+      position:absolute;left:${x}%;top:${y}%;
+      font-size:${sz}px;opacity:.16;
+      filter:drop-shadow(0 3px 6px rgba(0,0,0,.25));
+      animation:foodFloat ${dur}s ${i*0.45}s ease-in-out infinite;
+    `;
+    d.textContent=f;
+    el.appendChild(d);
   });
+  const kf=document.createElement('style');
+  kf.textContent='@keyframes foodFloat{0%,100%{transform:translateY(0) rotate(0deg) scale(1)}33%{transform:translateY(-13px) rotate(8deg) scale(1.06)}66%{transform:translateY(-5px) rotate(-5deg) scale(.97)}}';
+  document.head.appendChild(kf);
 })();
 
-// RIPPLE EFFECT
-function rippleEffect(e,btn){
+/* ─── RIPPLE ─── */
+function ripple(e,btn){
   btn.style.position='relative';btn.style.overflow='hidden';
   const r=document.createElement('span');
   r.className='ripple';
   const rect=btn.getBoundingClientRect();
-  const size=Math.max(rect.width,rect.height);
-  r.style.cssText=`width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+  const sz=Math.max(rect.width,rect.height);
+  r.style.cssText=`width:${sz}px;height:${sz}px;left:${e.clientX-rect.left-sz/2}px;top:${e.clientY-rect.top-sz/2}px`;
   btn.appendChild(r);
-  setTimeout(()=>r.remove(),700);
+  setTimeout(()=>r.remove(),600);
 }
 
-// CART
-let cartCount=0;
-function addToCart(e,name){
+/* ─── CART ─── */
+let cart=0;
+function addCart(e,name){
   e.stopPropagation();
-  cartCount++;
-  document.getElementById('cartCount').textContent=cartCount;
+  cart++;
+  document.getElementById('cartN').textContent=cart;
+  // btn animate
+  const b=e.currentTarget;
+  b.style.transform='scale(1.45)';
+  b.style.background='linear-gradient(135deg,#00e676,#00b050)';
+  setTimeout(()=>{b.style.transform='';b.style.background='';},320);
+  // toast
+  document.querySelectorAll('.toast').forEach(t=>t.remove());
   const toast=document.createElement('div');
-  toast.className='added-anim';
+  toast.className='toast';
   toast.textContent='✓ '+name+' adicionado!';
   document.body.appendChild(toast);
-  setTimeout(()=>toast.remove(),1600);
-  // button pulse
-  const btn=e.currentTarget;
-  btn.style.transform='scale(1.4)';
-  btn.style.background='#2ecc71';
-  setTimeout(()=>{btn.style.transform='';btn.style.background='';},300);
+  setTimeout(()=>toast.remove(),1800);
+  // cart badge pulse
+  const cn=document.getElementById('cartN');
+  cn.style.transform='scale(1.6)';
+  setTimeout(()=>cn.style.transform='',250);
 }
 
-// DAY CARDS
-document.querySelectorAll('.day-card').forEach(card=>{
-  card.addEventListener('click',function(){
-    document.querySelectorAll('.day-card').forEach(c=>c.classList.remove('active'));
+/* ─── DAY CARDS ─── */
+document.querySelectorAll('.day-card').forEach(c=>{
+  c.addEventListener('click',function(){
+    document.querySelectorAll('.day-card').forEach(x=>x.classList.remove('active'));
     this.classList.add('active');
-    // scroll into view
     this.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
   });
 });
 
-// SCROLL OBSERVER for meal cards
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
+/* ─── SCROLL OBSERVER ─── */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('in'), e.target.dataset.delay||0);
+      obs.unobserve(e.target);
     }
   });
-},{threshold:0.15});
-document.querySelectorAll('.meal-card,.dessert-card').forEach((el,i)=>{
-  el.style.transitionDelay=`${i*0.08}s`;
-  observer.observe(el);
-});
+},{threshold:0.12});
+document.querySelectorAll('.meal-card').forEach((el,i)=>{el.dataset.delay=i*90;obs.observe(el)});
+document.querySelectorAll('.dessert-card').forEach((el,i)=>{el.dataset.delay=i*70;obs.observe(el)});
 
-// COUNT UP ANIMATION
-const countObserver=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      const el=entry.target;
-      const target=+el.dataset.target;
-      let cur=0;
-      const step=Math.ceil(target/40);
-      const interval=setInterval(()=>{
-        cur+=step;
-        if(cur>=target){cur=target;clearInterval(interval);}
-        el.textContent=cur;
-      },30);
-      countObserver.unobserve(el);
-    }
+/* ─── COUNT UP ─── */
+const cntObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const el=e.target;
+    const tgt=+el.dataset.t;
+    const suf=el.dataset.s||'';
+    let cur=0;
+    const step=Math.ceil(tgt/50);
+    const iv=setInterval(()=>{
+      cur+=step;
+      if(cur>=tgt){cur=tgt;clearInterval(iv);}
+      el.textContent=cur+suf;
+    },28);
+    cntObs.unobserve(el);
   });
-},{threshold:0.5});
-document.querySelectorAll('.stat-num').forEach(el=>countObserver.observe(el));
+},{threshold:.5});
+document.querySelectorAll('.stat-num').forEach(el=>cntObs.observe(el));
 
-// BOTTOM NAV
+/* ─── BOTTOM NAV ─── */
 function setNav(el){
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  el.classList.add('active');
+  document.querySelectorAll('.bnav-item').forEach(n=>n.classList.remove('on'));
+  el.classList.add('on');
 }
 
-// SCROLL FAB
+/* ─── FAB / SCROLL ─── */
+function scrollTop(){window.scrollTo({top:0,behavior:'smooth'})}
 window.addEventListener('scroll',()=>{
-  const fab=document.getElementById('scrollFab');
-  if(window.scrollY>200) fab.classList.add('visible');
-  else fab.classList.remove('visible');
+  const fab=document.getElementById('fab');
+  window.scrollY>220?fab.classList.add('on'):fab.classList.remove('on');
+});
+
+/* ─── FEAT CARD hover glow ─── */
+document.querySelectorAll('.feat-card').forEach(c=>{
+  c.addEventListener('mouseenter',()=>c.style.boxShadow='0 8px 32px rgba(26,58,239,0.12)');
+  c.addEventListener('mouseleave',()=>c.style.boxShadow='');
 });
 </script>
 </body>
