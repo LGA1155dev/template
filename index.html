@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Polivalente - Escola que Transforma</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#1a3a8f;
+  --blue2:#2d5be3;
+  --cyan:#4dd8f0;
+  --yellow:#ffd166;
+  --purple:#7b3fc4;
+  --green:#2ecc71;
+  --white:#fff;
+  --gray:#f8f9ff;
+  --text:#1a1a2e;
+  --muted:#888;
+}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{font-family:'Inter',sans-serif;color:var(--text);background:#fff;overflow-x:hidden;max-width:430px;margin:0 auto;position:relative}
+
+/* SPLASH */
+#splash{
+  position:fixed;inset:0;background:var(--blue);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:9999;transition:opacity .6s ease, transform .6s ease;
+}
+#splash.hide{opacity:0;transform:scale(1.08);pointer-events:none}
+.splash-logo{
+  width:90px;height:90px;background:var(--blue2);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:38px;font-weight:900;color:#fff;
+  border:4px solid rgba(255,255,255,0.3);
+  animation:splashPulse 1s ease infinite alternate;
+}
+@keyframes splashPulse{to{transform:scale(1.08);box-shadow:0 0 40px rgba(77,216,240,0.5)}}
+.splash-brand{margin-top:18px;color:#fff;font-size:22px;font-weight:900;letter-spacing:2px}
+.splash-sub{color:rgba(255,255,255,0.6);font-size:11px;letter-spacing:3px;margin-top:4px;text-transform:uppercase}
+.splash-bar{width:160px;height:3px;background:rgba(255,255,255,0.15);border-radius:4px;margin-top:32px;overflow:hidden}
+.splash-bar-fill{height:100%;background:var(--cyan);border-radius:4px;width:0;animation:loadBar 1.8s ease forwards}
+@keyframes loadBar{to{width:100%}}
+
+/* NAV */
+nav{
+  background:#fff;display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;height:62px;
+  box-shadow:0 2px 16px rgba(0,0,0,0.07);
+  position:sticky;top:0;z-index:200;
+}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo-icon{
+  width:38px;height:38px;background:var(--blue);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:900;font-size:16px;
+  border:2.5px solid var(--blue2);
+}
+.logo-text strong{display:block;font-size:13px;font-weight:900;color:var(--blue);letter-spacing:1px}
+.logo-text span{font-size:8px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+.nav-right{display:flex;align-items:center;gap:10px}
+.btn-pedido{
+  background:var(--blue2);color:#fff;border:none;
+  padding:8px 14px;border-radius:8px;font-size:12px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;gap:6px;
+  transition:transform .15s,box-shadow .15s;
+}
+.btn-pedido:active{transform:scale(0.95)}
+.btn-pedido .badge{
+  background:#fff;color:var(--blue2);border-radius:50%;
+  width:18px;height:18px;font-size:10px;display:flex;
+  align-items:center;justify-content:center;font-weight:700;
+}
+.hamburger{background:none;border:none;cursor:pointer;padding:4px;display:flex;flex-direction:column;gap:5px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+
+/* HERO */
+.hero{
+  background:linear-gradient(160deg,#0f2567 0%,var(--blue) 45%,#1a8fd4 100%);
+  padding:28px 20px 36px;position:relative;overflow:hidden;min-height:520px;
+}
+.hero-particles{position:absolute;inset:0;pointer-events:none}
+.particle{
+  position:absolute;border-radius:50%;
+  animation:floatParticle linear infinite;
+  opacity:0;
+}
+@keyframes floatParticle{
+  0%{opacity:0;transform:translateY(0) scale(0)}
+  10%{opacity:1}
+  90%{opacity:1}
+  100%{opacity:0;transform:translateY(-300px) scale(1.5)}
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);
+  border-radius:20px;padding:5px 12px;font-size:11px;color:#fff;
+  margin-bottom:18px;font-weight:500;
+  animation:fadeSlideDown .6s ease .3s both;
+}
+@keyframes fadeSlideDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+.hero h1{
+  font-size:32px;font-weight:900;color:#fff;line-height:1.1;margin-bottom:14px;
+  animation:fadeSlideUp .6s ease .4s both;
+}
+.hero h1 span{color:var(--cyan)}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.hero p{
+  font-size:13px;color:rgba(255,255,255,0.82);line-height:1.7;margin-bottom:22px;
+  animation:fadeSlideUp .6s ease .5s both;
+}
+.hero-plate-wrap{
+  position:relative;margin:0 auto 22px;width:240px;height:240px;
+  animation:fadeSlideUp .7s ease .6s both;
+}
+.hero-plate-wrap img{
+  width:220px;height:220px;border-radius:50%;object-fit:cover;
+  border:5px solid rgba(255,255,255,0.25);
+  position:absolute;top:10px;left:10px;
+  box-shadow:0 8px 40px rgba(0,0,0,0.3);
+  animation:rotatePlate 20s linear infinite;
+}
+@keyframes rotatePlate{
+  0%{border-color:rgba(255,255,255,0.25)}
+  50%{border-color:rgba(77,216,240,0.5)}
+  100%{border-color:rgba(255,255,255,0.25)}
+}
+.nutri-badge{
+  position:absolute;bottom:-8px;right:-10px;
+  background:#fff;border-radius:50%;width:88px;height:88px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;font-size:7px;color:var(--blue);font-weight:700;padding:8px;
+  line-height:1.3;border:3px solid var(--blue2);text-transform:uppercase;letter-spacing:.4px;
+  animation:badgeBounce 2s ease infinite;
+}
+@keyframes badgeBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.nutri-badge .ni{font-size:18px;margin-bottom:2px}
+.floating-emojis{position:absolute;inset:0;pointer-events:none}
+.fem{position:absolute;font-size:22px;animation:floatEmoji ease-in-out infinite}
+@keyframes floatEmoji{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-12px) rotate(10deg)}
+}
+.hero-buttons{
+  display:flex;flex-direction:column;gap:10px;
+  animation:fadeSlideUp .6s ease .7s both;
+}
+.btn-hero-primary{
+  background:#fff;color:var(--blue);border:none;
+  padding:14px 20px;border-radius:12px;font-size:14px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:transform .15s,box-shadow .15s;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+}
+.btn-hero-primary:active{transform:scale(0.97)}
+.btn-hero-secondary{
+  background:rgba(255,255,255,0.12);color:#fff;
+  border:1.5px solid rgba(255,255,255,0.35);
+  padding:13px 20px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;
+  transition:transform .15s,background .2s;
+}
+.btn-hero-secondary:active{background:rgba(255,255,255,0.2);transform:scale(0.97)}
+.hero-approve{
+  display:flex;align-items:center;gap:10px;margin-top:18px;
+  animation:fadeSlideUp .6s ease .8s both;
+}
+.avatars{display:flex}
+.avatars img{
+  width:28px;height:28px;border-radius:50%;border:2px solid #fff;
+  margin-left:-7px;object-fit:cover;
+}
+.avatars img:first-child{margin-left:0}
+.approve-text{font-size:11px;color:rgba(255,255,255,0.85);line-height:1.4}
+.approve-text strong{color:#fff;display:flex;align-items:center;gap:4px;font-size:12px}
+.check-badge{
+  width:15px;height:15px;background:var(--green);border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;font-size:9px;
+}
+
+/* FEATURES SCROLL */
+.features-scroll{
+  background:#fff;padding:20px 0;
+  box-shadow:0 4px 16px rgba(0,0,0,0.07);
+  overflow:hidden;
+}
+.features-track{
+  display:flex;gap:0;
+  animation:scrollTrack 18s linear infinite;
+  width:max-content;
+}
+@keyframes scrollTrack{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.feature-pill{
+  display:flex;align-items:center;gap:8px;
+  background:var(--gray);border-radius:50px;
+  padding:10px 18px;margin:0 8px;white-space:nowrap;
+  flex-shrink:0;
+}
+.feature-pill .fi{font-size:18px}
+.feature-pill span{font-size:12px;font-weight:600;color:var(--blue)}
+
+/* ESPECIAIS */
+.especiais{background:var(--blue);padding:28px 20px 32px}
+.section-label{
+  display:flex;align-items:center;gap:6px;
+  font-size:11px;color:var(--yellow);font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;
+}
+.especiais h2{font-size:22px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:8px}
+.especiais p{font-size:12px;color:rgba(255,255,255,0.72);line-height:1.6;margin-bottom:18px}
+.btn-white{
+  background:#fff;color:var(--blue);border:none;
+  padding:11px 20px;border-radius:10px;font-size:13px;font-weight:700;
+  cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+  transition:transform .15s;margin-bottom:22px;
+}
+.btn-white:active{transform:scale(0.97)}
+.days-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.days-scroll::-webkit-scrollbar{display:none}
+.day-card{
+  background:rgba(255,255,255,0.1);border-radius:14px;
+  padding:14px 12px;text-align:center;
+  border:1.5px solid rgba(255,255,255,0.12);
+  cursor:pointer;transition:all .25s;flex-shrink:0;width:140px;
+}
+.day-card.active{background:#fff;border-color:#fff}
+.day-card:active{transform:scale(0.97)}
+.day-name{font-size:10px;font-weight:700;color:rgba(255,255,255,0.9);text-transform:uppercase;letter-spacing:.5px}
+.day-card.active .day-name{color:var(--blue)}
+.day-date{font-size:10px;color:rgba(255,255,255,0.55);margin-bottom:8px}
+.day-card.active .day-date{color:var(--blue2)}
+.special-badge{
+  display:inline-block;background:var(--yellow);color:#7a5200;
+  font-size:8px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:6px;text-transform:uppercase;
+}
+.day-card img{width:100%;height:75px;border-radius:8px;object-fit:cover;margin-bottom:6px}
+.day-meal{font-size:10px;color:rgba(255,255,255,0.82);line-height:1.4}
+.day-card.active .day-meal{color:#333}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:14px}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.25);transition:all .3s}
+.dot.active{width:18px;background:#fff;border-radius:4px}
+
+/* REFEIÇÕES */
+.refeicoes{padding:28px 20px;background:var(--gray)}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.section-title-wrap{display:flex;align-items:center;gap:10px}
+.sec-icon{
+  width:38px;height:38px;background:var(--blue);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;
+}
+.sec-title{font-size:17px;font-weight:800;color:var(--blue)}
+.sec-sub{font-size:11px;color:var(--muted)}
+.ver-link{color:var(--blue2);font-size:12px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:3px}
+.meals-col{display:flex;flex-direction:column;gap:14px}
+.meal-card{
+  background:#fff;border-radius:16px;overflow:hidden;
+  box-shadow:0 2px 14px rgba(0,0,0,0.06);
+  display:flex;align-items:stretch;
+  cursor:pointer;transition:transform .2s,box-shadow .2s;
+  opacity:0;transform:translateY(30px);
+  transition:opacity .5s ease,transform .5s ease,box-shadow .2s;
+}
+.meal-card.visible{opacity:1;transform:translateY(0)}
+.meal-card:active{transform:scale(0.98)}
+.meal-card img{width:100px;height:100px;object-fit:cover;flex-shrink:0}
+.meal-body{padding:12px 14px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.meal-body h4{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px}
+.meal-body p{font-size:11px;color:var(--muted);line-height:1.5;flex:1}
+.meal-footer{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.badge-leve{background:#e8f5e9;color:#2e7d32;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px}
+.btn-add{
+  background:var(--blue2);color:#fff;border:none;
+  width:28px;height:28px;border-radius:8px;font-size:18px;font-weight:300;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:transform .15s,background .2s;line-height:1;
+}
+.btn-add:active{transform:scale(0.9);background:var(--blue)}
+
+/* COUNTER ANIM */
+.added-anim{
+  position:fixed;top:80px;right:20px;
+  background:var(--green);color:#fff;
+  padding:8px 14px;border-radius:50px;
+  font-size:12px;font-weight:700;
+  z-index:999;
+  animation:popIn .3s ease both, fadeOut .3s ease 1.2s both;
+  pointer-events:none;
+}
+@keyframes popIn{from{opacity:0;transform:scale(0.7) translateY(-10px)}to{opacity:1;transform:scale(1)}}
+@keyframes fadeOut{to{opacity:0;transform:translateY(-10px)}}
+
+/* SOBREMESAS */
+.sobremesas{padding:28px 20px;background:#fff}
+.desserts-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
+.desserts-scroll::-webkit-scrollbar{display:none}
+.dessert-card{
+  flex-shrink:0;width:140px;cursor:pointer;
+  opacity:0;transform:scale(0.9);
+  transition:opacity .5s ease,transform .5s ease;
+}
+.dessert-card.visible{opacity:1;transform:scale(1)}
+.dessert-card img{
+  width:140px;height:120px;border-radius:14px;object-fit:cover;
+  margin-bottom:8px;transition:transform .2s;
+  box-shadow:0 4px 16px rgba(0,0,0,0.1);
+}
+.dessert-card:active img{transform:scale(0.96)}
+.dessert-card h4{font-size:12px;font-weight:700;color:var(--text)}
+.dessert-card p{font-size:10px;color:var(--muted);line-height:1.4;margin-top:2px}
+
+/* NUTRIÇÃO BANNER */
+.nutri-banner{
+  background:linear-gradient(135deg,#0f2567,var(--blue2));
+  padding:28px 20px;text-align:center;
+}
+.nutri-banner h3{font-size:18px;font-weight:900;color:#fff;margin-bottom:8px}
+.nutri-banner p{font-size:12px;color:rgba(255,255,255,0.75);margin-bottom:20px;line-height:1.6}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stat-card{
+  background:rgba(255,255,255,0.12);border-radius:14px;padding:14px 8px;text-align:center;
+  border:1px solid rgba(255,255,255,0.1);
+}
+.stat-num{
+  font-size:26px;font-weight:900;color:#fff;
+  display:block;font-variant-numeric:tabular-nums;
+}
+.stat-label{font-size:10px;color:rgba(255,255,255,0.7);margin-top:2px;display:block;line-height:1.3}
+
+/* FOOTER MINI */
+.footer{
+  background:var(--blue);padding:24px 20px 36px;
+}
+.footer-logo{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.footer-logo-icon{
+  width:34px;height:34px;background:rgba(255,255,255,0.15);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:900;
+}
+.footer-logo-text strong{display:block;font-size:13px;font-weight:900;color:#fff;letter-spacing:1px}
+.footer-logo-text span{font-size:8px;color:rgba(255,255,255,0.5);letter-spacing:1.5px;text-transform:uppercase}
+.footer-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.footer-pill{
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
+  border-radius:50px;padding:6px 14px;font-size:11px;color:rgba(255,255,255,0.8);font-weight:500;
+}
+.footer-bottom{font-size:10px;color:rgba(255,255,255,0.4);text-align:center;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08)}
+
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:430px;background:#fff;
+  display:flex;justify-content:space-around;align-items:center;
+  height:64px;padding:0 8px;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.1);
+  z-index:200;border-top:1px solid #f0f0f0;
+}
+.nav-item{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  cursor:pointer;padding:6px 12px;border-radius:12px;
+  transition:background .2s;font-size:9px;color:var(--muted);font-weight:600;
+}
+.nav-item.active{color:var(--blue2)}
+.nav-item:active{background:var(--gray)}
+.nav-item .ni{font-size:20px}
+.nav-item.active .ni{animation:navBounce .3s ease}
+@keyframes navBounce{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+
+/* RIPPLE */
+.ripple{
+  position:absolute;border-radius:50%;
+  background:rgba(255,255,255,0.3);
+  animation:rippleAnim .6s ease out;
+  pointer-events:none;
+}
+@keyframes rippleAnim{
+  from{transform:scale(0);opacity:1}
+  to{transform:scale(4);opacity:0}
+}
+
+/* SCROLL FAB */
+.scroll-fab{
+  position:fixed;bottom:80px;right:16px;
+  width:44px;height:44px;background:var(--blue2);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:20px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(45,91,227,0.4);
+  transition:transform .2s,opacity .3s;opacity:0;pointer-events:none;z-index:199;
+}
+.scroll-fab.visible{opacity:1;pointer-events:auto}
+.scroll-fab:active{transform:scale(0.92)}
+
+body{padding-bottom:64px}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-logo">P</div>
+  <div class="splash-brand">POLIVALENTE</div>
+  <div class="splash-sub">Escola que Transforma</div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-icon">P</div>
+    <div class="logo-text">
+      <strong>POLIVALENTE</strong>
+      <span>Escola que Transforma</span>
+    </div>
+  </a>
+  <div class="nav-right">
+    <button class="btn-pedido" id="btnPedido">🛒 <span class="badge" id="cartCount">0</span></button>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-particles" id="particles"></div>
+  <div class="floating-emojis" id="floatingEmojis"></div>
+
+  <div class="hero-badge">❤️ Alimentação Escolar Saudável</div>
+  <div class="hero-plate-wrap">
+    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&h=500&fit=crop" alt="Prato saudável">
+    <div class="nutri-badge">
+      <div class="ni">👩‍⚕️</div>
+      CARDÁPIO<br>PLANEJADO POR<br>NUTRICIONISTAS
+    </div>
+  </div>
+  <h1>Alimentação que cuida hoje, <span>transforma o amanhã.</span></h1>
+  <p>Refeições elaboradas por nutricionistas com ingredientes selecionados para promover saúde, bem-estar e melhor desempenho no aprendizado.</p>
+  <div class="hero-buttons">
+    <button class="btn-hero-primary" onclick="rippleEffect(event,this)">🌿 Conheça nosso cardápio</button>
+    <button class="btn-hero-secondary" onclick="rippleEffect(event,this)">Saiba mais sobre nutrição</button>
+  </div>
+  <div class="hero-approve">
+    <div class="avatars">
+      <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=56&h=56&fit=crop&crop=face" alt="n1">
+      <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=56&h=56&fit=crop&crop=face" alt="n2">
+      <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=56&h=56&fit=crop&crop=face" alt="n3">
+    </div>
+    <div class="approve-text">
+      <strong><span class="check-badge">✓</span> Aprovado por nutricionistas</strong>
+      Equipe especializada em nutrição escolar
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES SCROLL -->
+<div class="features-scroll">
+  <div class="features-track" id="featuresTrack">
+    <div class="feature-pill"><span class="fi">🥦</span><span>Alimentação Balanceada</span></div>
+    <div class="feature-pill"><span class="fi">🛡️</span><span>Saúde e Bem-estar</span></div>
+    <div class="feature-pill"><span class="fi">📋</span><span>Planejado por Nutricionistas</span></div>
+    <div class="feature-pill"><span class="fi">❤️</span><span>Hábitos que Transformam</span></div>
+    <div class="feature-pill"><span class="fi">✨</span><span>Ingredientes Selecionados</span></div>
+    <div class="feature-pill"><span class="fi">🌱</span><span>Produtos Frescos</span></div>
+    <!-- duplicate for seamless -->
+    <div class="feature-pill"><span class="fi">🥦</span><span>Alimentação Balanceada</span></div>
+    <div class="feature-pill"><span class="fi">🛡️</span><span>Saúde e Bem-estar</span></div>
+    <div class="feature-pill"><span class="fi">📋</span><span>Planejado por Nutricionistas</span></div>
+    <div class="feature-pill"><span class="fi">❤️</span><span>Hábitos que Transformam</span></div>
+    <div class="feature-pill"><span class="fi">✨</span><span>Ingredientes Selecionados</span></div>
+    <div class="feature-pill"><span class="fi">🌱</span><span>Produtos Frescos</span></div>
+  </div>
+</div>
+
+<!-- ESPECIAIS DA SEMANA -->
+<section class="especiais">
+  <div class="section-label">⭐ Especiais da Semana</div>
+  <h2>Pratos especiais para dias ainda melhores!</h2>
+  <p>Receitas deliciosas, nutritivas e preparadas com cuidado para variar e surpreender.</p>
+  <button class="btn-white" onclick="rippleEffect(event,this)">Ver cardápio completo →</button>
+  <div class="days-scroll" id="daysScroll">
+    <div class="day-card" data-day="0">
+      <div class="day-name">Segunda</div>
+      <div class="day-date">20/05</div>
+      <img src="https://images.unsplash.com/photo-1604909052743-94e838986d24?w=220&h=150&fit=crop" alt="Segunda">
+      <div class="day-meal">Frango grelhado ao molho de ervas com arroz integral e legumes</div>
+    </div>
+    <div class="day-card" data-day="1">
+      <div class="day-name">Terça</div>
+      <div class="day-date">21/05</div>
+      <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=220&h=150&fit=crop" alt="Terça">
+      <div class="day-meal">Macarrão ao molho de tomate natural com almôndegas assadas</div>
+    </div>
+    <div class="day-card active" data-day="2">
+      <div class="day-name">Quarta</div>
+      <div class="day-date">22/05</div>
+      <div class="special-badge">ESPECIAL</div>
+      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=220&h=150&fit=crop" alt="Quarta">
+      <div class="day-meal">Estrogonofe de frango com arroz branco e batata palha</div>
+    </div>
+    <div class="day-card" data-day="3">
+      <div class="day-name">Quinta</div>
+      <div class="day-date">23/05</div>
+      <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=220&h=150&fit=crop" alt="Quinta">
+      <div class="day-meal">Escondidinho de carne moída com purê de mandioquinha</div>
+    </div>
+    <div class="day-card" data-day="4">
+      <div class="day-name">Sexta</div>
+      <div class="day-date">24/05</div>
+      <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=220&h=150&fit=crop" alt="Sexta">
+      <div class="day-meal">Bowl nutritivo com frango desfiado, quinoa, feijão e legumes</div>
+    </div>
+  </div>
+  <div class="dots" id="dayDots">
+    <div class="dot"></div>
+    <div class="dot active"></div>
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</section>
+
+<!-- REFEIÇÕES DO DIA -->
+<section class="refeicoes">
+  <div class="section-header">
+    <div class="section-title-wrap">
+      <div class="sec-icon">🍴</div>
+      <div>
+        <div class="sec-title">Refeições do Dia</div>
+        <div class="sec-sub">Opções para uma rotina saudável</div>
+      </div>
+    </div>
+    <a href="#" class="ver-link">Ver mais →</a>
+  </div>
+  <div class="meals-col" id="mealsCol">
+    <div class="meal-card">
+      <img src="https://images.unsplash.com/photo-1516684732162-798a0062be99?w=300&h=200&fit=crop" alt="Prato 1">
+      <div class="meal-body">
+        <div>
+          <h4>Arroz, Feijão e Frango</h4>
+          <p>Clássico e nutritivo! Arroz branco, feijão carioca, peito de frango grelhado e legumes cozidos.</p>
+        </div>
+        <div class="meal-footer">
+          <span style="font-size:12px;color:var(--muted)">Prato completo</span>
+          <button class="btn-add" onclick="addToCart(event,'Arroz, Feijão e Frango')">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="meal-card">
+      <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=300&h=200&fit=crop" alt="Prato 2">
+      <div class="meal-body">
+        <div>
+          <h4>Arroz, Feijão e Macarrão</h4>
+          <p>Combinação que dá energia! Arroz branco, feijão carioca, macarrão ao sugo e legumes.</p>
+        </div>
+        <div class="meal-footer">
+          <span style="font-size:12px;color:var(--muted)">Prato completo</span>
+          <button class="btn-add" onclick="addToCart(event,'Arroz, Feijão e Macarrão')">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="meal-card">
+      <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=200&fit=crop" alt="Prato 3">
+      <div class="meal-body">
+        <div>
+          <h4>Arroz, Feijão e Carne Moída</h4>
+          <p>Arroz branco, feijão carioca, carne moída refogada e salada verde.</p>
+        </div>
+        <div class="meal-footer">
+          <span style="font-size:12px;color:var(--muted)">Prato completo</span>
+          <button class="btn-add" onclick="addToCart(event,'Arroz, Feijão e Carne Moída')">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="meal-card">
+      <img src="https://images.unsplash.com/photo-1604909052743-94e838986d24?w=300&h=200&fit=crop" alt="Prato 4">
+      <div class="meal-body">
+        <div>
+          <span class="badge-leve">Opção Leve</span>
+          <h4>Frango Grelhado com Legumes</h4>
+          <p>Peito de frango grelhado com legumes no vapor e arroz integral.</p>
+        </div>
+        <div class="meal-footer">
+          <span style="font-size:12px;color:var(--muted)">Leve &amp; saudável</span>
+          <button class="btn-add" onclick="addToCart(event,'Frango Grelhado com Legumes')">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBREMESAS -->
+<section class="sobremesas">
+  <div class="section-header">
+    <div class="section-title-wrap">
+      <div class="sec-icon" style="background:var(--purple)">🧁</div>
+      <div>
+        <div class="sec-title" style="color:var(--purple)">Sobremesas</div>
+        <div class="sec-sub">Deliciosas e equilibradas</div>
+      </div>
+    </div>
+    <a href="#" class="ver-link" style="color:var(--purple)">Ver mais →</a>
+  </div>
+  <div class="desserts-scroll">
+    <div class="dessert-card">
+      <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=280&h=220&fit=crop" alt="Fruta">
+      <h4>Fruta da Estação</h4>
+      <p>Opções variadas todos os dias.</p>
+    </div>
+    <div class="dessert-card">
+      <img src="https://images.unsplash.com/photo-1584395630827-860eee694d7b?w=280&h=220&fit=crop" alt="Gelatina">
+      <h4>Gelatina Natural</h4>
+      <p>Feita com suco natural, menos açúcar.</p>
+    </div>
+    <div class="dessert-card">
+      <img src="https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?w=280&h=220&fit=crop" alt="Mousse">
+      <h4>Mousse de Chocolate</h4>
+      <p>Feito com cacau selecionado.</p>
+    </div>
+    <div class="dessert-card">
+      <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=280&h=220&fit=crop" alt="Iogurte">
+      <h4>Iogurte com Frutas</h4>
+      <p>Iogurte natural com frutas frescas.</p>
+    </div>
+    <div class="dessert-card">
+      <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=280&h=220&fit=crop" alt="Bolo">
+      <h4>Bolo Caseiro</h4>
+      <p>Fatia caseira com menos açúcar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NUTRIÇÃO BANNER -->
+<section class="nutri-banner">
+  <h3>🥗 Comer bem é aprender melhor!</h3>
+  <p>Uma escola que cuida da alimentação cuida do futuro dos seus alunos.</p>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-num" data-target="98">0</span>
+      <span class="stat-label">% aprovação<br>dos alunos</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num" data-target="12">0</span>
+      <span class="stat-label">nutricionistas<br>dedicados</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num" data-target="350">0</span>
+      <span class="stat-label">refeições<br>por semana</span>
+    </div>
+  </div>
+  <button class="btn-white" onclick="rippleEffect(event,this)">📞 Fale com a escola</button>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">
+    <div class="footer-logo-icon">P</div>
+    <div class="footer-logo-text">
+      <strong>POLIVALENTE</strong>
+      <span>Escola que Transforma</span>
+    </div>
+  </div>
+  <div class="footer-pills">
+    <div class="footer-pill">🥦 Alimentação saudável</div>
+    <div class="footer-pill">📋 Cardápio semanal</div>
+    <div class="footer-pill">❤️ Nutrição escolar</div>
+    <div class="footer-pill">🌿 Produtos frescos</div>
+  </div>
+  <div class="footer-bottom">© 2025 Polivalente Escola. Todos os direitos reservados.</div>
+</footer>
+
+<!-- SCROLL FAB -->
+<div class="scroll-fab" id="scrollFab" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="nav-item active" onclick="setNav(this)"><span class="ni">🏠</span>Início</div>
+  <div class="nav-item" onclick="setNav(this)"><span class="ni">📋</span>Cardápio</div>
+  <div class="nav-item" onclick="setNav(this)"><span class="ni">⭐</span>Especiais</div>
+  <div class="nav-item" onclick="setNav(this)"><span class="ni">🥗</span>Nutrição</div>
+  <div class="nav-item" onclick="setNav(this)"><span class="ni">👤</span>Perfil</div>
+</div>
+
+<script>
+// SPLASH
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('splash').classList.add('hide');
+    setTimeout(()=>document.getElementById('splash').remove(),700);
+  },2000);
+});
+
+// PARTICLES
+(function(){
+  const container=document.getElementById('particles');
+  const colors=['rgba(77,216,240,0.6)','rgba(255,255,255,0.4)','rgba(255,209,102,0.5)','rgba(255,107,157,0.4)'];
+  function spawnParticle(){
+    const p=document.createElement('div');
+    p.className='particle';
+    const size=Math.random()*8+4;
+    const x=Math.random()*100;
+    const dur=Math.random()*6+5;
+    const delay=Math.random()*4;
+    p.style.cssText=`width:${size}px;height:${size}px;left:${x}%;bottom:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${dur}s;animation-delay:${delay}s`;
+    container.appendChild(p);
+    setTimeout(()=>p.remove(),(dur+delay)*1000+200);
+  }
+  setInterval(spawnParticle,400);
+  for(let i=0;i<10;i++) spawnParticle();
+})();
+
+// FLOATING EMOJIS
+(function(){
+  const emojis=['🥦','🍗','🍎','🥕','🌽','🍅','🥑','🫐'];
+  const container=document.getElementById('floatingEmojis');
+  emojis.forEach((em,i)=>{
+    const el=document.createElement('div');
+    el.className='fem';
+    const x=10+Math.random()*80;
+    const y=5+Math.random()*85;
+    const dur=3+Math.random()*3;
+    const delay=i*0.4;
+    el.style.cssText=`left:${x}%;top:${y}%;animation-duration:${dur}s;animation-delay:${delay}s;opacity:0.18;font-size:${16+Math.random()*10}px`;
+    el.textContent=em;
+    container.appendChild(el);
+  });
+})();
+
+// RIPPLE EFFECT
+function rippleEffect(e,btn){
+  btn.style.position='relative';btn.style.overflow='hidden';
+  const r=document.createElement('span');
+  r.className='ripple';
+  const rect=btn.getBoundingClientRect();
+  const size=Math.max(rect.width,rect.height);
+  r.style.cssText=`width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+  btn.appendChild(r);
+  setTimeout(()=>r.remove(),700);
+}
+
+// CART
+let cartCount=0;
+function addToCart(e,name){
+  e.stopPropagation();
+  cartCount++;
+  document.getElementById('cartCount').textContent=cartCount;
+  const toast=document.createElement('div');
+  toast.className='added-anim';
+  toast.textContent='✓ '+name+' adicionado!';
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.remove(),1600);
+  // button pulse
+  const btn=e.currentTarget;
+  btn.style.transform='scale(1.4)';
+  btn.style.background='#2ecc71';
+  setTimeout(()=>{btn.style.transform='';btn.style.background='';},300);
+}
+
+// DAY CARDS
+document.querySelectorAll('.day-card').forEach(card=>{
+  card.addEventListener('click',function(){
+    document.querySelectorAll('.day-card').forEach(c=>c.classList.remove('active'));
+    this.classList.add('active');
+    // scroll into view
+    this.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  });
+});
+
+// SCROLL OBSERVER for meal cards
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+},{threshold:0.15});
+document.querySelectorAll('.meal-card,.dessert-card').forEach((el,i)=>{
+  el.style.transitionDelay=`${i*0.08}s`;
+  observer.observe(el);
+});
+
+// COUNT UP ANIMATION
+const countObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const el=entry.target;
+      const target=+el.dataset.target;
+      let cur=0;
+      const step=Math.ceil(target/40);
+      const interval=setInterval(()=>{
+        cur+=step;
+        if(cur>=target){cur=target;clearInterval(interval);}
+        el.textContent=cur;
+      },30);
+      countObserver.unobserve(el);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.stat-num').forEach(el=>countObserver.observe(el));
+
+// BOTTOM NAV
+function setNav(el){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// SCROLL FAB
+window.addEventListener('scroll',()=>{
+  const fab=document.getElementById('scrollFab');
+  if(window.scrollY>200) fab.classList.add('visible');
+  else fab.classList.remove('visible');
+});
+</script>
+</body>
+</html>
